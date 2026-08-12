@@ -462,7 +462,21 @@ The application was tested using sample recruitment data.
 
 ---
 
-## 16. Known Limitations
+## 16. Assumptions
+
+- The application is intended for recruiter/admin use.
+- MySQL is assumed to be available locally during development.
+- Candidate ATS evaluation is based on configured recruitment rules.
+- Sample recruitment data is used for demonstration and testing.
+
+
+##  17. Deployment
+
+The current project is configured for local development and evaluation using Node.js, Express.js and MySQL.
+
+For production deployment, the backend, frontend and MySQL database can be deployed using suitable cloud hosting services with appropriate environment variables and database configuration.
+
+## 18. Known Limitations
 
 Current limitations of the project include:
 
@@ -474,7 +488,7 @@ Current limitations of the project include:
 
 ---
 
-## 17. Future Enhancements
+## 19. Future Enhancements
 
 Possible future improvements include:
 
@@ -491,7 +505,7 @@ Possible future improvements include:
 
 ---
 
-## 18. Project Status
+## 20. Project Status
 
 RecruitIQ is a functional Smart Recruitment Analytics Platform with working frontend, backend API integration, MySQL database integration, ATS/criteria evaluation, interview management, analytics and reporting modules.
 
