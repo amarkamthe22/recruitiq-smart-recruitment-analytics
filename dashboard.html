@@ -1678,7 +1678,7 @@ async function loadCandidates(){
 
         const response =
             await fetch(
-                API_URL,
+                API_URL + "?t=" + Date.now(),
                 {
                     method:"GET",
                     cache:"no-store"
@@ -1719,6 +1719,10 @@ async function loadCandidates(){
 
         updateDashboard();
 
+        // IMPORTANT:
+        // Interviewed card uses the actual interviews table count.
+        await loadInterviewCount();
+
     }
     catch(error){
 
@@ -1758,6 +1762,76 @@ async function loadCandidates(){
 
         toast(
             "Backend/API connection failed"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD ACTUAL INTERVIEW COUNT
+   ===================================================== */
+
+async function loadInterviewCount(){
+
+    try{
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/interviews?t=" +
+                Date.now(),
+                {
+                    method:"GET",
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                `Interview API HTTP ${response.status}`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.message ||
+                "Interview API error"
+            );
+
+        }
+
+
+        const interviews =
+            Array.isArray(result.interviews)
+                ? result.interviews
+                : [];
+
+
+        const totalInterviews =
+            interviews.length;
+
+
+        // Dashboard card
+        $("interviewedCount").textContent =
+            totalInterviews;
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Interview Count Error:",
+            error
         );
 
     }
@@ -1833,8 +1907,8 @@ function updateDashboard(){
         shortlisted;
 
 
-    $("interviewedCount").textContent =
-        interviewed;
+    // interviewedCount is updated by loadInterviewCount()
+    // using the actual interviews table.
 
 
     $("selectedCount").textContent =

@@ -3086,11 +3086,10 @@ function getATSLabel(score){
    SUMMARY CARDS
 ============================================================ */
 
-function updateSummaryCards(){
+async function updateSummaryCards(){
 
     const total =
         candidatesData.length;
-
 
     const applied =
         candidatesData.filter(
@@ -3100,7 +3099,6 @@ function updateSummaryCards(){
                 === "applied"
         ).length;
 
-
     const shortlisted =
         candidatesData.filter(
             c =>
@@ -3108,20 +3106,6 @@ function updateSummaryCards(){
                 .toLowerCase()
                 === "shortlisted"
         ).length;
-
-
-    const interviewed =
-        candidatesData.filter(
-            c =>
-                String(c.status || "")
-                .toLowerCase()
-                === "interview"
-                ||
-                String(c.status || "")
-                .toLowerCase()
-                === "interviewed"
-        ).length;
-
 
     const selected =
         candidatesData.filter(
@@ -3131,36 +3115,77 @@ function updateSummaryCards(){
                 === "selected"
         ).length;
 
+    /*
+       Interviewed count is taken from the interviews table.
+       This keeps the Candidates page consistent with the
+       Dashboard/Interviews page.
+    */
+    let interviewed = 0;
+
+    try{
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/interviews",
+                {
+                    method:"GET",
+                    headers:authHeaders(),
+                    cache:"no-store"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(response.ok && data.success){
+
+            const interviews =
+                Array.isArray(data.interviews)
+                ? data.interviews
+                : [];
+
+            interviewed =
+                interviews.length;
+        }
+
+    }catch(error){
+
+        console.error(
+            "Interview count error:",
+            error
+        );
+
+        /* Fallback to candidate status count if API is unavailable. */
+        interviewed =
+            candidatesData.filter(c => {
+                const status =
+                    String(c.status || "").toLowerCase();
+
+                return
+                    status === "interview" ||
+                    status === "interviewed";
+            }).length;
+    }
 
     document.getElementById(
         "totalCandidates"
-    ).textContent =
-        total;
-
+    ).textContent = total;
 
     document.getElementById(
         "appliedCount"
-    ).textContent =
-        applied;
-
+    ).textContent = applied;
 
     document.getElementById(
         "shortlistedCount"
-    ).textContent =
-        shortlisted;
-
+    ).textContent = shortlisted;
 
     document.getElementById(
         "interviewedCount"
-    ).textContent =
-        interviewed;
-
+    ).textContent = interviewed;
 
     document.getElementById(
         "selectedCount"
-    ).textContent =
-        selected;
-
+    ).textContent = selected;
 }
 
 

@@ -1678,35 +1678,66 @@ app.get("/api/analytics/summary", (req, res) => {
     db.query(
         `
         SELECT
-            COUNT(*) AS total_candidates,
 
-            SUM(
-                LOWER(COALESCE(status,'')) = 'applied'
+            /* Total Candidates */
+            (
+                SELECT COUNT(*)
+                FROM candidates
+            ) AS total_candidates,
+
+            /* Applied Candidates */
+            (
+                SELECT COUNT(*)
+                FROM candidates
+                WHERE LOWER(
+                    COALESCE(status, '')
+                ) = 'applied'
             ) AS applied_candidates,
 
-            SUM(
-                LOWER(COALESCE(status,'')) = 'shortlisted'
+            /* Shortlisted Candidates */
+            (
+                SELECT COUNT(*)
+                FROM candidates
+                WHERE LOWER(
+                    COALESCE(status, '')
+                ) = 'shortlisted'
             ) AS shortlisted_candidates,
 
-            SUM(
-                LOWER(COALESCE(status,'')) = 'selected'
+            /* Selected Candidates */
+            (
+                SELECT COUNT(*)
+                FROM candidates
+                WHERE LOWER(
+                    COALESCE(status, '')
+                ) = 'selected'
             ) AS selected_candidates,
 
-            SUM(
-                LOWER(COALESCE(status,'')) IN
-                ('interview','interviewed')
+            /* Total Interviews */
+            (
+                SELECT COUNT(*)
+                FROM interviews
             ) AS interviewed_candidates,
 
-            SUM(
-                LOWER(COALESCE(status,'')) = 'rejected'
+            /* Rejected Candidates */
+            (
+                SELECT COUNT(*)
+                FROM candidates
+                WHERE LOWER(
+                    COALESCE(status, '')
+                ) = 'rejected'
             ) AS rejected_candidates,
 
-            ROUND(
-                AVG(COALESCE(ats_score,0)),
-                2
+            /* Average ATS Score */
+            (
+                SELECT ROUND(
+                    AVG(
+                        COALESCE(ats_score, 0)
+                    ),
+                    2
+                )
+                FROM candidates
             ) AS average_score
 
-        FROM candidates
         `,
         (err, rows) => {
 
@@ -1717,6 +1748,7 @@ app.get("/api/analytics/summary", (req, res) => {
                     message: "Analytics failed",
                     error: err.message
                 });
+
             }
 
             res.json({
@@ -1726,6 +1758,7 @@ app.get("/api/analytics/summary", (req, res) => {
 
         }
     );
+
 });
 
 // =====================================================
