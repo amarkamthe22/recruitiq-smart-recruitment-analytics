@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Interviews | RecruitIQ</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#4f46e5;
+    --purple:#7c3aed;
+    --gradient:linear-gradient(135deg,#4f46e5,#7c3aed);
+
+    --body:#f0f2f8;
+    --white:#ffffff;
+    --sidebar:#0b1426;
+
+    --text:#0b1a2f;
+    --secondary:#475569;
+    --muted:#94a3b8;
+
+    --border:#e9edf4;
+    --light:#f8fafc;
+
+    --green:#059669;
+    --orange:#d97706;
+    --red:#dc2626;
+    --blue:#0891b2;
+
+    --sidebar-width:270px;
+}
+
+body{
+    font-family:
+    Inter,
+    Arial,
+    "Segoe UI",
+    sans-serif;
+
+    background:var(--body);
+    color:var(--text);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+.app{
+    min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:var(--sidebar-width);
+
+    background:var(--sidebar);
+    color:white;
+
+    padding:30px 20px;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow-y:auto;
+
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    padding-bottom:24px;
+    margin-bottom:20px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand-icon{
+    width:46px;
+    height:46px;
+
+    border-radius:14px;
+
+    background:var(--gradient);
+
+    display:grid;
+    place-items:center;
+
+    font-size:22px;
+}
+
+.brand h2{
+    font-size:20px;
+}
+
+.brand span{
+    display:block;
+    color:#94a3b8;
+    font-size:11px;
+    margin-top:2px;
+}
+
+.menu-title{
+    color:#52627f;
+    font-size:10px;
+    font-weight:700;
+
+    letter-spacing:1.2px;
+
+    padding:16px 12px 8px;
+
+    text-transform:uppercase;
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    padding:11px 16px;
+
+    margin:3px 0;
+
+    color:#8a9bb8;
+
+    border-radius:9px;
+
+    font-size:14px;
+
+    transition:.2s;
+
+    cursor:pointer;
+}
+
+.menu-item i{
+    width:22px;
+    text-align:center;
+    font-size:18px;
+}
+
+.menu-item:hover{
+    color:#fff;
+    background:rgba(255,255,255,.06);
+}
+
+.menu-item.active{
+    color:#fff;
+    background:var(--primary);
+    box-shadow:0 6px 20px rgba(79,70,229,.3);
+}
+
+.badge{
+    margin-left:auto;
+
+    background:rgba(79,70,229,.35);
+
+    color:#c7d2fe;
+
+    padding:2px 9px;
+
+    border-radius:999px;
+
+    font-size:10px;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    padding-top:18px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:var(--sidebar-width);
+    min-height:100vh;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    height:76px;
+
+    background:rgba(255,255,255,.96);
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 40px;
+
+    position:sticky;
+    top:0;
+
+    z-index:50;
+}
+
+.top-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.mobile-menu{
+    display:none;
+
+    border:0;
+    background:transparent;
+
+    font-size:24px;
+    cursor:pointer;
+}
+
+.search-box{
+    width:360px;
+    height:44px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:999px;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:0 18px;
+}
+
+.search-box i{
+    color:var(--muted);
+}
+
+.search-box input{
+    width:100%;
+    border:0;
+    outline:0;
+
+    font-size:13px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.icon-button{
+    border:0;
+    background:transparent;
+
+    color:var(--secondary);
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--gradient);
+
+    color:white;
+
+    display:grid;
+    place-items:center;
+
+    font-weight:700;
+}
+
+.profile-info strong{
+    display:block;
+    font-size:13px;
+}
+
+.profile-info span{
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:34px 40px 50px;
+}
+
+.page-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:28px;
+
+    flex-wrap:wrap;
+}
+
+.breadcrumb{
+    color:var(--muted);
+    font-size:12px;
+
+    margin-bottom:6px;
+}
+
+.page-header h1{
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:var(--secondary);
+    font-size:14px;
+}
+
+.primary-btn{
+    border:0;
+
+    background:var(--gradient);
+
+    color:#fff;
+
+    padding:12px 22px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    box-shadow:0 6px 20px rgba(79,70,229,.25);
+
+    transition:.2s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= STATS ================= */
+
+.stats-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+
+    margin-bottom:28px;
+}
+
+.stat-card{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.03);
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:13px;
+}
+
+.stat-icon{
+    width:46px;
+    height:46px;
+
+    border-radius:12px;
+
+    display:grid;
+    place-items:center;
+
+    font-size:21px;
+}
+
+.icon-blue{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+.icon-green{
+    background:#ecfdf5;
+    color:#059669;
+}
+
+.icon-orange{
+    background:#fff7ed;
+    color:#d97706;
+}
+
+.icon-red{
+    background:#fef2f2;
+    color:#dc2626;
+}
+
+.stat-card p{
+    color:var(--secondary);
+    font-size:13px;
+}
+
+.stat-card h2{
+    font-size:29px;
+    margin-top:3px;
+}
+
+/* ================= PANEL ================= */
+
+.panel{
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:25px 28px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.03);
+}
+
+.panel-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:22px;
+
+    flex-wrap:wrap;
+}
+
+.panel-header h3{
+    font-size:17px;
+}
+
+.panel-header p{
+    color:var(--muted);
+    font-size:12px;
+
+    margin-top:3px;
+}
+
+/* ================= FILTERS ================= */
+
+.filters{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.filter{
+    height:40px;
+
+    padding:0 14px;
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    background:#fff;
+
+    color:var(--secondary);
+
+    outline:none;
+
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+.filter:focus{
+    border-color:var(--primary);
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:950px;
+}
+
+th{
+    background:#f8fafc;
+
+    padding:14px 16px;
+
+    text-align:left;
+
+    color:var(--secondary);
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+
+    border-bottom:2px solid var(--border);
+}
+
+td{
+    padding:16px;
+
+    border-bottom:1px solid #f1f4fb;
+
+    font-size:13px;
+}
+
+.candidate{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.candidate-avatar{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:var(--gradient);
+
+    color:#fff;
+
+    display:grid;
+    place-items:center;
+
+    font-size:12px;
+    font-weight:700;
+
+    flex-shrink:0;
+}
+
+.candidate-info strong{
+    display:block;
+    font-size:13px;
+}
+
+.candidate-info span{
+    display:block;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:2px;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    display:inline-block;
+
+    padding:5px 12px;
+
+    border-radius:999px;
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+.status.scheduled{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+.status.completed{
+    background:#ecfdf5;
+    color:#059669;
+}
+
+.status.cancelled{
+    background:#fef2f2;
+    color:#dc2626;
+}
+
+.status.pending{
+    background:#fff7ed;
+    color:#d97706;
+}
+
+/* ================= TYPE ================= */
+
+.type{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    color:var(--secondary);
+
+    font-size:12px;
+}
+
+/* ================= ACTION ================= */
+
+.actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:6px;
+}
+
+.action{
+    width:34px;
+    height:34px;
+
+    border:1px solid var(--border);
+
+    background:#fff;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    display:grid;
+    place-items:center;
+
+    color:var(--secondary);
+
+    transition:.2s;
+}
+
+.action:hover{
+    background:#f8fafc;
+}
+
+.action.view:hover{
+    color:var(--primary);
+}
+
+.action.edit:hover{
+    color:var(--orange);
+}
+
+.action.delete:hover{
+    color:var(--red);
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    text-align:center;
+
+    padding:60px 20px;
+
+    color:var(--muted);
+
+    display:none;
+}
+
+.empty i{
+    display:block;
+
+    font-size:46px;
+
+    margin-bottom:12px;
+}
+
+.empty h3{
+    color:var(--secondary);
+
+    margin-bottom:5px;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay{
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(11,20,38,.58);
+
+    z-index:500;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:720px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:0 20px 70px rgba(0,0,0,.25);
+}
+
+.modal-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:22px;
+}
+
+.modal-header h2{
+    font-size:21px;
+}
+
+.close-btn{
+    width:36px;
+    height:36px;
+
+    border:0;
+
+    background:#f1f5f9;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    color:var(--secondary);
+
+    font-size:12px;
+
+    font-weight:600;
+
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+
+    padding:11px 13px;
+
+    border:1px solid #d9dce5;
+
+    border-radius:9px;
+
+    outline:none;
+
+    font-size:13px;
+
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px rgba(79,70,229,.08);
+}
+
+.form-group textarea{
+    min-height:90px;
+
+    resize:vertical;
+}
+
+.form-actions{
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:24px;
+}
+
+.cancel-btn{
+    border:1px solid var(--border);
+
+    background:#f8fafc;
+
+    color:var(--secondary);
+
+    padding:11px 20px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-weight:600;
+}
+
+/* ================= VIEW MODAL ================= */
+
+.details-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+}
+
+.detail-box{
+    padding:15px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:#fafbff;
+}
+
+.detail-box.full{
+    grid-column:1/-1;
+}
+
+.detail-box small{
+    color:var(--muted);
+
+    display:block;
+
+    font-size:11px;
+
+    margin-bottom:5px;
+}
+
+.detail-box strong{
+    font-size:13px;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    background:#0b1426;
+
+    color:white;
+
+    padding:14px 20px;
+
+    border-radius:10px;
+
+    font-size:13px;
+
+    display:none;
+
+    z-index:1000;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.toast.show{
+    display:block;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+    text-align:center;
+
+    padding:40px;
+
+    color:var(--muted);
+}
+
+.loading i{
+    font-size:25px;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1100px){
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .sidebar{
+        transform:translateX(-100%);
+
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 16px;
+    }
+
+    .search-box{
+        width:230px;
+    }
+
+    .profile-info{
+        display:none;
+    }
+
+    .content{
+        padding:20px 16px 35px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+}
+
+@media(max-width:520px){
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .search-box{
+        width:160px;
+    }
+
+    .page-header h1{
+        font-size:24px;
+    }
+
+    .primary-btn{
+        width:100%;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .detail-box.full{
+        grid-column:auto;
+    }
+
+}
+
+
+/* Sidebar navigation counts intentionally hidden */
+.menu-item .badge,
+.menu-item .nav-badge {
+    display: none !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i class="bi bi-graph-up-arrow"></i>
+        </div>
+
+        <div>
+            <h2>RecruitIQ</h2>
+            <span>Recruitment Analytics</span>
+        </div>
+
+    </div>
+
+
+    <div class="menu-title">
+        Main Menu
+    </div>
+
+
+    <nav>
+
+        <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            Dashboard
+        </a>
+
+
+        <a href="candidates.html" class="menu-item">
+
+            <i class="bi bi-people-fill"></i>
+
+            Candidates
+
+        </a>
+
+
+        <a href="jobs.html" class="menu-item">
+
+            <i class="bi bi-briefcase-fill"></i>
+
+            Jobs
+
+        </a>
+
+
+        <a href="interviews.html"
+           class="menu-item active">
+
+            <i class="bi bi-calendar-check-fill"></i>
+
+            Interviews
+
+        </a>
+
+    </nav>
+
+
+    <div class="menu-title">
+        Analytics
+    </div>
+
+
+    <nav>
+
+        <a href="analytics.html"
+           class="menu-item">
+
+            <i class="bi bi-bar-chart-fill"></i>
+
+            Analytics
+
+        </a>
+
+
+        <a href="reports.html"
+           class="menu-item">
+
+            <i class="bi bi-file-bar-graph-fill"></i>
+
+            Reports
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="settings.html"
+           class="menu-item">
+
+            <i class="bi bi-gear-fill"></i>
+
+            Settings
+
+        </a>
+
+
+        <a href="index.html"
+           class="menu-item">
+
+            <i class="bi bi-box-arrow-left"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+    <div class="top-left">
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu">
+
+            <i class="bi bi-list"></i>
+
+        </button>
+
+
+        <div class="search-box">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search interviews...">
+
+        </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <button
+            class="icon-button"
+            id="notificationBtn">
+
+            <i class="bi bi-bell"></i>
+
+        </button>
+
+
+        <div class="profile">
+
+            <div class="avatar">
+                AK
+            </div>
+
+            <div class="profile-info">
+
+                <strong>
+                    Amar Kamthe
+                </strong>
+
+                <span>
+                    Recruiter
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<section class="content">
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="page-header">
+
+    <div>
+
+        <p class="breadcrumb">
+            Home / Interviews
+        </p>
+
+        <h1>
+            Interviews
+        </h1>
+
+        <p class="subtitle">
+            Schedule and manage candidate interviews.
+        </p>
+
+    </div>
+
+
+    <button
+        class="primary-btn"
+        id="addInterviewBtn">
+
+        <i class="bi bi-plus-lg"></i>
+
+        Schedule Interview
+
+    </button>
+
+</div>
+
+
+<!-- ================= STATS ================= -->
+
+<div class="stats-grid">
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon icon-blue">
+
+                <i class="bi bi-calendar-event"></i>
+
+            </div>
+
+        </div>
+
+        <p>Total Interviews</p>
+
+        <h2 id="totalInterviews">
+            0
+        </h2>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon icon-green">
+
+                <i class="bi bi-calendar-check"></i>
+
+            </div>
+
+        </div>
+
+        <p>Scheduled</p>
+
+        <h2 id="scheduledInterviews">
+            0
+        </h2>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon icon-orange">
+
+                <i class="bi bi-clock-history"></i>
+
+            </div>
+
+        </div>
+
+        <p>Completed</p>
+
+        <h2 id="completedInterviews">
+            0
+        </h2>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon icon-red">
+
+                <i class="bi bi-calendar-x"></i>
+
+            </div>
+
+        </div>
+
+        <p>Cancelled</p>
+
+        <h2 id="cancelledInterviews">
+            0
+        </h2>
+
+    </div>
+
+</div>
+
+
+<!-- ================= INTERVIEW TABLE ================= -->
+
+<div class="panel">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <h3>
+                Interview Schedule
+            </h3>
+
+            <p>
+                Manage all candidate interviews
+            </p>
+
+        </div>
+
+
+        <div class="filters">
+
+
+            <select
+                class="filter"
+                id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Scheduled">
+                    Scheduled
+                </option>
+
+                <option value="Completed">
+                    Completed
+                </option>
+
+                <option value="Cancelled">
+                    Cancelled
+                </option>
+
+            </select>
+
+
+            <select
+                class="filter"
+                id="typeFilter">
+
+                <option value="all">
+                    All Types
+                </option>
+
+                <option value="Online">
+                    Online
+                </option>
+
+                <option value="Offline">
+                    Offline
+                </option>
+
+                <option value="Phone">
+                    Phone
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Candidate
+                    </th>
+
+                    <th>
+                        Position
+                    </th>
+
+                    <th>
+                        Date & Time
+                    </th>
+
+                    <th>
+                        Interviewer
+                    </th>
+
+                    <th>
+                        Type
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="interviewTable">
+
+            </tbody>
+
+        </table>
+
+
+        <div
+            class="loading"
+            id="loadingState">
+
+            <i class="bi bi-arrow-repeat"></i>
+
+            <p>
+                Loading candidates...
+            </p>
+
+        </div>
+
+
+        <div
+            class="empty"
+            id="emptyState">
+
+            <i class="bi bi-calendar2-x"></i>
+
+            <h3>
+                No interviews found
+            </h3>
+
+            <p>
+                Schedule your first candidate interview.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ================= SCHEDULE MODAL ================= -->
+
+<div
+    class="modal-overlay"
+    id="modalOverlay">
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Schedule Interview
+            </h2>
+
+
+            <button
+                class="close-btn"
+                id="closeModal">
+
+                <i class="bi bi-x"></i>
+
+            </button>
+
+        </div>
+
+
+        <form id="interviewForm">
+
+
+            <input
+                type="hidden"
+                id="editId">
+
+
+            <div class="form-grid">
+
+
+                <!-- CANDIDATE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Candidate *
+                    </label>
+
+                    <select
+                        id="candidate"
+                        required>
+
+                        <option value="">
+                            Select Candidate
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- POSITION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Position *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="position"
+                        placeholder="Data Analyst"
+                        required>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Interview Date *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="interviewDate"
+                        required>
+
+                </div>
+
+
+                <!-- TIME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Interview Time *
+                    </label>
+
+                    <input
+                        type="time"
+                        id="interviewTime"
+                        required>
+
+                </div>
+
+
+                <!-- TYPE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Interview Type *
+                    </label>
+
+                    <select
+                        id="interviewType"
+                        required>
+
+                        <option value="Online">
+                            Online
+                        </option>
+
+                        <option value="Offline">
+                            Offline
+                        </option>
+
+                        <option value="Phone">
+                            Phone
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- INTERVIEWER -->
+
+                <div class="form-group">
+
+                    <label>
+                        Interviewer *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="interviewer"
+                        placeholder="Enter interviewer name"
+                        required>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="form-group">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select
+                        id="interviewStatus">
+
+                        <option value="Scheduled">
+                            Scheduled
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MEETING -->
+
+                <div class="form-group">
+
+                    <label>
+                        Meeting Link
+                    </label>
+
+                    <input
+                        type="url"
+                        id="meetingLink"
+                        placeholder="https://meet.google.com/...">
+
+                </div>
+
+
+                <!-- NOTES -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Interview Notes
+                    </label>
+
+                    <textarea
+                        id="interviewNotes"
+                        placeholder="Add interview notes..."></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelModal">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Save Interview
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= VIEW MODAL ================= -->
+
+<div
+    class="modal-overlay"
+    id="viewOverlay">
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Interview Details
+            </h2>
+
+
+            <button
+                class="close-btn"
+                id="closeView">
+
+                <i class="bi bi-x"></i>
+
+            </button>
+
+        </div>
+
+
+        <div id="viewContent">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+const API_BASE = "http://localhost:5000/api";
+const CANDIDATES_API = API_BASE + "/candidates";
+const INTERVIEWS_API = API_BASE + "/interviews";
+
+let candidates = [];
+let interviews = [];
+
+const table = document.getElementById("interviewTable");
+const emptyState = document.getElementById("emptyState");
+const loadingState = document.getElementById("loadingState");
+const modal = document.getElementById("modalOverlay");
+const viewModal = document.getElementById("viewOverlay");
+const form = document.getElementById("interviewForm");
+const candidateSelect = document.getElementById("candidate");
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2800);
+}
+
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function getInitials(name) {
+    if (!name) return "NA";
+    return String(name).trim().split(/\s+/).filter(Boolean)
+        .map(x => x.charAt(0)).join("").substring(0,2).toUpperCase();
+}
+
+function formatDate(date) {
+    if (!date) return "Not scheduled";
+    const d = new Date(String(date).substring(0,10) + "T00:00:00");
+    if (Number.isNaN(d.getTime())) return date;
+    return d.toLocaleDateString("en-IN", {
+        day:"2-digit", month:"short", year:"numeric"
+    });
+}
+
+async function loadCandidates() {
+    try {
+        const response = await fetch(CANDIDATES_API, {cache:"no-store"});
+        const result = await response.json();
+        if (!response.ok || !result.success)
+            throw new Error(result.message || "Could not load candidates");
+
+        candidates = Array.isArray(result.candidates) ? result.candidates : [];
+        fillCandidateDropdown();
+    } catch (error) {
+        console.error(error);
+        candidates = [];
+        fillCandidateDropdown();
+        showToast("Unable to load candidates.");
+    }
+}
+
+async function loadInterviews() {
+    loadingState.style.display = "block";
+    emptyState.style.display = "none";
+
+    try {
+        const response = await fetch(INTERVIEWS_API, {cache:"no-store"});
+        const result = await response.json();
+
+        if (!response.ok || !result.success)
+            throw new Error(result.message || "Could not load interviews");
+
+        interviews = Array.isArray(result.interviews) ? result.interviews : [];
+        loadingState.style.display = "none";
+        renderInterviews();
+    } catch (error) {
+        console.error(error);
+        interviews = [];
+        loadingState.style.display = "none";
+        renderInterviews();
+        showToast("Unable to load interviews. Check server.");
+    }
+}
+
+function fillCandidateDropdown() {
+    candidateSelect.innerHTML = `<option value="">Select Candidate</option>`;
+
+    if (!candidates.length) {
+        candidateSelect.innerHTML +=
+            `<option value="" disabled>No candidates found</option>`;
+        return;
+    }
+
+    candidates.forEach(candidate => {
+        const option = document.createElement("option");
+        option.value = candidate.id;
+        option.textContent =
+            `${candidate.name || "Unknown"} — ${candidate.position || candidate.applied_job || "No Position"}`;
+        candidateSelect.appendChild(option);
+    });
+}
+
+candidateSelect.addEventListener("change", function() {
+    const id = Number(this.value);
+    const candidate = candidates.find(x => Number(x.id) === id);
+    document.getElementById("position").value =
+        candidate?.position || candidate?.applied_job || "";
+});
+
+document.getElementById("addInterviewBtn").addEventListener("click", async () => {
+    form.reset();
+    document.getElementById("editId").value = "";
+    document.getElementById("modalTitle").innerText = "Schedule Interview";
+    document.getElementById("interviewStatus").value = "Scheduled";
+    modal.classList.add("show");
+    await loadCandidates();
+});
+
+function closeModal() {
+    modal.classList.remove("show");
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+document.getElementById("cancelModal").addEventListener("click", closeModal);
+
+function validateInterview() {
+    if (!Number(candidateSelect.value)) {
+        showToast("Please select a candidate.");
+        return false;
+    }
+
+    const date = document.getElementById("interviewDate").value;
+    const time = document.getElementById("interviewTime").value;
+    const interviewer = document.getElementById("interviewer").value.trim();
+
+    if (!date || !time) {
+        showToast("Interview date and time are required.");
+        return false;
+    }
+
+    if (!interviewer) {
+        showToast("Interviewer name is required.");
+        return false;
+    }
+
+    const dt = new Date(`${date}T${time}`);
+    if (Number.isNaN(dt.getTime())) {
+        showToast("Invalid interview date/time.");
+        return false;
+    }
+
+    return true;
+}
+
+function getPayload() {
+    const candidateId = Number(candidateSelect.value);
+    const candidate = candidates.find(x => Number(x.id) === candidateId);
+
+    return {
+        candidate_id: candidateId,
+        job_id: candidate?.job_id ? Number(candidate.job_id) : null,
+        interview_date: document.getElementById("interviewDate").value,
+        interview_time: document.getElementById("interviewTime").value,
+        interviewer: document.getElementById("interviewer").value.trim(),
+        interview_type: document.getElementById("interviewType").value,
+        status: document.getElementById("interviewStatus").value,
+        meeting_link: document.getElementById("meetingLink").value.trim(),
+        interview_score: 0,
+        notes: document.getElementById("interviewNotes").value.trim()
+    };
+}
+
+form.addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!validateInterview()) return;
+
+    const editId = document.getElementById("editId").value;
+    const payload = getPayload();
+
+    try {
+        const response = await fetch(
+            editId ? `${INTERVIEWS_API}/${editId}` : INTERVIEWS_API,
+            {
+                method: editId ? "PUT" : "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify(payload)
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success)
+            throw new Error(result.message || "Interview save failed");
+
+        closeModal();
+        showToast(editId
+            ? "Interview updated successfully."
+            : "Interview scheduled successfully.");
+
+        await loadInterviews();
+    } catch (error) {
+        console.error(error);
+        showToast(error.message || "Could not save interview.");
+    }
+});
+
+async function updateInterviewStatus(id, newStatus) {
+    const interview = interviews.find(x => Number(x.id) === Number(id));
+    if (!interview) return showToast("Interview not found.");
+
+    const candidateName =
+        interview.candidate_name || interview.candidateName || "candidate";
+
+    if (newStatus === "Cancelled" &&
+        !confirm(`Cancel interview for ${candidateName}?`)) return;
+
+    const payload = {
+        candidate_id: Number(interview.candidate_id || interview.candidateId),
+        job_id: interview.job_id ? Number(interview.job_id) : null,
+        interview_date: String(
+            interview.interview_date || interview.date || ""
+        ).substring(0,10),
+        interview_time: String(
+            interview.interview_time || interview.time || ""
+        ).substring(0,8),
+        interviewer: interview.interviewer || "",
+        interview_type: interview.interview_type || interview.type || "Online",
+        status: newStatus,
+        meeting_link: interview.meeting_link || interview.meetingLink || "",
+        interview_score: Number(interview.interview_score || 0),
+        notes: interview.notes || ""
+    };
+
+    try {
+        const response = await fetch(`${INTERVIEWS_API}/${id}`, {
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success)
+            throw new Error(result.message || "Status update failed");
+
+        showToast(
+            newStatus === "Completed"
+                ? "Interview marked as Completed."
+                : "Interview marked as Cancelled."
+        );
+
+        await loadInterviews();
+    } catch (error) {
+        console.error(error);
+        showToast(error.message || "Could not update status.");
+    }
+}
+
+function renderInterviews() {
+    const search = document.getElementById("searchInput").value.toLowerCase().trim();
+    const statusFilter = document.getElementById("statusFilter").value;
+    const typeFilter = document.getElementById("typeFilter").value;
+
+    const filtered = interviews.filter(interview => {
+        const name = interview.candidate_name || interview.candidateName || "";
+        const email = interview.candidate_email || interview.email || "";
+        const position =
+            interview.candidate_position ||
+            interview.position ||
+            interview.job_title || "";
+        const interviewer = interview.interviewer || "";
+        const status = interview.status || "Scheduled";
+        const type = interview.interview_type || interview.type || "Online";
+
+        return (
+            `${name} ${email} ${position} ${interviewer}`
+                .toLowerCase().includes(search) &&
+            (statusFilter === "all" || status === statusFilter) &&
+            (typeFilter === "all" || type === typeFilter)
+        );
+    });
+
+    table.innerHTML = "";
+
+    if (!filtered.length) {
+        emptyState.style.display = "block";
+    } else {
+        emptyState.style.display = "none";
+
+        filtered.forEach(interview => {
+            const row = document.createElement("tr");
+
+            const name =
+                interview.candidate_name ||
+                interview.candidateName || "Unknown Candidate";
+            const email =
+                interview.candidate_email ||
+                interview.email || "";
+            const position =
+                interview.candidate_position ||
+                interview.position ||
+                interview.job_title || "Not specified";
+            const date =
+                interview.interview_date || interview.date || "";
+            const time =
+                interview.interview_time || interview.time || "";
+            const type =
+                interview.interview_type || interview.type || "Online";
+            const status = interview.status || "Scheduled";
+
+            let icon = "bi-camera-video";
+            if (type === "Offline") icon = "bi-building";
+            if (type === "Phone") icon = "bi-telephone";
+
+            let actions = `
+                <button class="action view" title="View"
+                    onclick="viewInterview(${Number(interview.id)})">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="action edit" title="Edit"
+                    onclick="editInterview(${Number(interview.id)})">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            `;
+
+            if (status === "Scheduled") {
+                actions += `
+                    <button class="action" title="Mark Completed"
+                        onclick="updateInterviewStatus(${Number(interview.id)},'Completed')"
+                        style="color:#059669">
+                        <i class="bi bi-check-circle"></i>
+                    </button>
+                    <button class="action" title="Cancel Interview"
+                        onclick="updateInterviewStatus(${Number(interview.id)},'Cancelled')"
+                        style="color:#dc2626">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+                `;
+            }
+
+            actions += `
+                <button class="action delete" title="Delete"
+                    onclick="deleteInterview(${Number(interview.id)})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `;
+
+            row.innerHTML = `
+                <td>
+                    <div class="candidate">
+                        <div class="candidate-avatar">
+                            ${escapeHTML(getInitials(name))}
+                        </div>
+                        <div class="candidate-info">
+                            <strong>${escapeHTML(name)}</strong>
+                            <span>${escapeHTML(email)}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>${escapeHTML(position)}</td>
+                <td>
+                    <strong>${formatDate(date)}</strong><br>
+                    <span style="color:#94a3b8;font-size:11px">
+                        ${escapeHTML(time)}
+                    </span>
+                </td>
+                <td>${escapeHTML(interview.interviewer || "")}</td>
+                <td>
+                    <span class="type">
+                        <i class="bi ${icon}"></i>
+                        ${escapeHTML(type)}
+                    </span>
+                </td>
+                <td>
+                    <span class="status ${escapeHTML(status.toLowerCase())}">
+                        ${escapeHTML(status)}
+                    </span>
+                </td>
+                <td><div class="actions">${actions}</div></td>
+            `;
+
+            table.appendChild(row);
+        });
+    }
+
+    updateStats();
+}
+
+function updateStats() {
+    document.getElementById("totalInterviews").innerText = interviews.length;
+    document.getElementById("scheduledInterviews").innerText =
+        interviews.filter(x => x.status === "Scheduled").length;
+    document.getElementById("completedInterviews").innerText =
+        interviews.filter(x => x.status === "Completed").length;
+    document.getElementById("cancelledInterviews").innerText =
+        interviews.filter(x => x.status === "Cancelled").length;
+}
+
+async function editInterview(id) {
+    const interview = interviews.find(x => Number(x.id) === Number(id));
+    if (!interview) return showToast("Interview not found.");
+
+    await loadCandidates();
+
+    form.reset();
+
+    document.getElementById("editId").value = interview.id;
+    document.getElementById("modalTitle").innerText = "Edit Interview";
+
+    candidateSelect.value =
+        Number(interview.candidate_id || interview.candidateId);
+
+    document.getElementById("position").value =
+        interview.candidate_position ||
+        interview.position ||
+        interview.job_title || "";
+
+    document.getElementById("interviewDate").value =
+        String(interview.interview_date || interview.date || "").substring(0,10);
+
+    document.getElementById("interviewTime").value =
+        String(interview.interview_time || interview.time || "").substring(0,5);
+
+    document.getElementById("interviewType").value =
+        interview.interview_type || interview.type || "Online";
+
+    document.getElementById("interviewer").value =
+        interview.interviewer || "";
+
+    document.getElementById("interviewStatus").value =
+        interview.status || "Scheduled";
+
+    document.getElementById("meetingLink").value =
+        interview.meeting_link || interview.meetingLink || "";
+
+    document.getElementById("interviewNotes").value =
+        interview.notes || "";
+
+    modal.classList.add("show");
+}
+
+async function deleteInterview(id) {
+    const interview = interviews.find(x => Number(x.id) === Number(id));
+    if (!interview) return;
+
+    const name =
+        interview.candidate_name || interview.candidateName || "candidate";
+
+    if (!confirm(`Delete interview for ${name}?`)) return;
+
+    try {
+        const response = await fetch(`${INTERVIEWS_API}/${id}`, {
+            method:"DELETE"
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success)
+            throw new Error(result.message || "Delete failed");
+
+        showToast("Interview deleted successfully.");
+        await loadInterviews();
+    } catch (error) {
+        console.error(error);
+        showToast(error.message || "Could not delete interview.");
+    }
+}
+
+function viewInterview(id) {
+    const interview = interviews.find(x => Number(x.id) === Number(id));
+    if (!interview) return;
+
+    const name =
+        interview.candidate_name || interview.candidateName || "Unknown";
+    const email =
+        interview.candidate_email || interview.email || "";
+    const position =
+        interview.candidate_position ||
+        interview.position ||
+        interview.job_title || "";
+    const date =
+        interview.interview_date || interview.date || "";
+    const time =
+        interview.interview_time || interview.time || "";
+    const type =
+        interview.interview_type || interview.type || "Online";
+    const status = interview.status || "Scheduled";
+    const link =
+        interview.meeting_link || interview.meetingLink || "";
+    const notes = interview.notes || "No notes added.";
+
+    document.getElementById("viewContent").innerHTML = `
+        <div class="details-grid">
+            <div class="detail-box">
+                <small>Candidate</small>
+                <strong>${escapeHTML(name)}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Email</small>
+                <strong>${escapeHTML(email)}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Position / Job</small>
+                <strong>${escapeHTML(position)}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Interviewer</small>
+                <strong>${escapeHTML(interview.interviewer || "")}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Date</small>
+                <strong>${formatDate(date)}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Time</small>
+                <strong>${escapeHTML(time)}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Type</small>
+                <strong>${escapeHTML(type)}</strong>
+            </div>
+            <div class="detail-box">
+                <small>Status</small>
+                <span class="status ${escapeHTML(status.toLowerCase())}">
+                    ${escapeHTML(status)}
+                </span>
+            </div>
+            <div class="detail-box full">
+                <small>Meeting Link</small>
+                ${
+                    link
+                    ? `<a href="${escapeHTML(link)}" target="_blank"
+                        style="color:#4f46e5;font-size:13px;font-weight:600">
+                        <i class="bi bi-box-arrow-up-right"></i> Open Meeting
+                       </a>`
+                    : `<span style="color:#94a3b8;font-size:13px">
+                        No meeting link provided.
+                       </span>`
+                }
+            </div>
+            <div class="detail-box full">
+                <small>Interview Notes</small>
+                <p style="color:#475569;font-size:13px;line-height:1.6">
+                    ${escapeHTML(notes)}
+                </p>
+            </div>
+        </div>
+    `;
+
+    viewModal.classList.add("show");
+}
+
+function closeView() {
+    viewModal.classList.remove("show");
+}
+
+document.getElementById("closeView").addEventListener("click", closeView);
+document.getElementById("searchInput").addEventListener("input", renderInterviews);
+document.getElementById("statusFilter").addEventListener("change", renderInterviews);
+document.getElementById("typeFilter").addEventListener("change", renderInterviews);
+
+document.getElementById("notificationBtn").addEventListener("click", () => {
+    showToast("No new notifications.");
+});
+
+document.getElementById("mobileMenu").addEventListener("click", () => {
+    document.getElementById("sidebar").classList.toggle("open");
+});
+
+modal.addEventListener("click", event => {
+    if (event.target === modal) closeModal();
+});
+
+viewModal.addEventListener("click", event => {
+    if (event.target === viewModal) closeView();
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadCandidates();
+    await loadInterviews();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>RecruitIQ · Dashboard</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+<style>
+/* ============================================================
+   COMMON RECRUITIQ PAGE LAYOUT
+   ============================================================ */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* SAME SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    background: #0b1426;
+    color: white;
+    padding: 24px 14px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+/* SAME MAIN AREA */
+.main {
+    margin-left: 250px !important;
+    width: calc(100% - 250px) !important;
+    min-height: 100vh;
+}
+
+/* SAME CONTENT */
+.content {
+    width: 100%;
+    max-width: none;
+    padding: 30px;
+}
+
+/* SAME TOPBAR */
+.topbar {
+    width: 100%;
+}
+
+/* TABLES NEVER CHANGE PAGE WIDTH */
+.table-wrap,
+.table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* RESPONSIVE */
+@media (min-width: 769px) {
+    .sidebar {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 250px !important;
+        min-width: 250px !important;
+        max-width: 250px !important;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+/* ============================================================
+   MAIN STYLES
+   ============================================================ */
+body{
+    font-family:Arial,Segoe UI,sans-serif;
+    background:#f0f2f8;
+    color:#0b1a2f;
+}
+
+a{
+    text-decoration:none;
+}
+
+button,input,select{
+    font-family:inherit;
+}
+
+/* ================= SIDEBAR ================= */
+
+.brand{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:0 8px 22px;
+    border-bottom:1px solid #ffffff12;
+    margin-bottom:18px;
+}
+
+.brand-icon{
+    width:46px;
+    height:46px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    display:grid;
+    place-items:center;
+    font-size:23px;
+}
+
+.brand h2{
+    font-size:20px;
+}
+
+.brand span{
+    font-size:11px;
+    color:#94a3b8;
+}
+
+.menu-title{
+    font-size:10px;
+    color:#52627f;
+    font-weight:700;
+    letter-spacing:1.2px;
+    padding:14px 12px 7px;
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    color:#8a9bb8;
+    padding:11px 14px;
+    margin:3px 0;
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu-item i{
+    width:23px;
+    text-align:center;
+    font-size:18px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+    color:white;
+    background:#4f46e5;
+}
+
+.badge{
+    margin-left:auto;
+    background:#4f46e54d;
+    color:#a5b4fc;
+    padding:2px 8px;
+    border-radius:99px;
+    font-size:10px;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+    border-top:1px solid #ffffff12;
+    padding-top:14px;
+}
+
+.user{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:10px;
+}
+
+.avatar-sm,
+.avatar{
+    border-radius:50%;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    display:grid;
+    place-items:center;
+    color:white;
+    font-weight:700;
+}
+
+.avatar-sm{
+    width:36px;
+    height:36px;
+    font-size:12px;
+}
+
+.user span{
+    display:block;
+    color:#94a3b8;
+    font-size:11px;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    height:70px;
+    background:#ffffffee;
+    border-bottom:1px solid #e9edf4;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.top-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.toggle{
+    display:none;
+    border:0;
+    background:transparent;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.search{
+    width:360px;
+    height:44px;
+    background:white;
+    border:1px solid #e9edf4;
+    border-radius:99px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 18px;
+}
+
+.search i{
+    color:#94a3b8;
+}
+
+.search input{
+    width:100%;
+    border:0;
+    outline:0;
+    font-size:13px;
+}
+
+.search small{
+    color:#64748b;
+    white-space:nowrap;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.icon{
+    border:0;
+    background:transparent;
+    font-size:20px;
+    cursor:pointer;
+    position:relative;
+}
+
+.dot{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:#ef4444;
+    border:2px solid white;
+    border-radius:50%;
+    right:2px;
+    top:2px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+}
+
+.profile small{
+    display:block;
+    color:#94a3b8;
+}
+
+/* ================= CONTENT ================= */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.breadcrumb{
+    font-size:12px;
+    color:#94a3b8;
+}
+
+.header h1{
+    font-size:30px;
+    margin:5px 0;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#475569;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e9edf4;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 2px 8px #00000008;
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:13px;
+}
+
+.stat-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    font-size:21px;
+}
+
+.blue{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+.purple{
+    background:#f3e8ff;
+    color:#7c3aed;
+}
+
+.orange{
+    background:#fff7ed;
+    color:#ea580c;
+}
+
+.cyan{
+    background:#ecfeff;
+    color:#0891b2;
+}
+
+.green{
+    background:#ecfdf5;
+    color:#059669;
+}
+
+.trend{
+    font-size:10px;
+    color:#059669;
+    background:#ecfdf5;
+    padding:4px 9px;
+    border-radius:99px;
+}
+
+.card p{
+    color:#475569;
+    font-size:12px;
+}
+
+.card h2{
+    font-size:29px;
+    margin:3px 0;
+}
+
+.card small{
+    color:#94a3b8;
+    font-size:11px;
+}
+
+/* ================= CHARTS ================= */
+
+.charts{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:22px;
+    margin-bottom:25px;
+}
+
+.panel{
+    background:white;
+    border:1px solid #e9edf4;
+    border-radius:18px;
+    padding:23px;
+    box-shadow:0 2px 8px #00000005;
+}
+
+.panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.panel-head h3{
+    font-size:16px;
+}
+
+.panel-head p{
+    font-size:12px;
+    color:#94a3b8;
+    margin-top:3px;
+}
+
+.select{
+    padding:8px 13px;
+    border:1px solid #e9edf4;
+    border-radius:99px;
+    background:white;
+    outline:none;
+}
+
+.chart{
+    height:270px;
+}
+
+.pipeline{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.donut{
+    width:170px;
+    height:170px;
+    position:relative;
+    flex-shrink:0;
+}
+
+.center{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-content:center;
+    text-align:center;
+    pointer-events:none;
+}
+
+.center strong{
+    font-size:24px;
+}
+
+.center span{
+    font-size:10px;
+    color:#94a3b8;
+}
+
+.legend{
+    display:grid;
+    gap:12px;
+    width:100%;
+}
+
+.legend div{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+}
+
+.legend b{
+    margin-left:auto;
+}
+
+.ldot{
+    width:10px;
+    height:10px;
+    border-radius:4px;
+}
+
+/* ================= SKILLS ================= */
+
+.skills{
+    border-top:1px solid #f1f4fb;
+    margin-top:18px;
+    padding-top:17px;
+}
+
+.skill{
+    margin-bottom:14px;
+    font-size:12px;
+}
+
+.skill-name{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:5px;
+}
+
+.progress{
+    height:7px;
+    background:#eef2f6;
+    border-radius:99px;
+    overflow:hidden;
+}
+
+.bar{
+    height:100%;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+}
+
+/* ================= TABLE ================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+}
+
+th{
+    background:#f8fafc;
+    padding:13px;
+    text-align:left;
+    font-size:11px;
+    color:#475569;
+    border-bottom:2px solid #e9edf4;
+}
+
+td{
+    padding:13px;
+    border-bottom:1px solid #f1f4fb;
+}
+
+.candidate{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.cavatar{
+    width:37px;
+    height:37px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:white;
+    font-size:11px;
+    font-weight:600;
+}
+
+.cinfo span{
+    display:block;
+    color:#94a3b8;
+    font-size:11px;
+    margin-top:2px;
+}
+
+.status{
+    padding:5px 12px;
+    border-radius:99px;
+    font-size:11px;
+    font-weight:600;
+}
+
+.applied{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+.short{
+    background:#fff7ed;
+    color:#d97706;
+}
+
+.interview{
+    background:#ecfeff;
+    color:#0891b2;
+}
+
+.selected{
+    background:#ecfdf5;
+    color:#059669;
+}
+
+.action{
+    border:0;
+    background:transparent;
+    font-size:18px;
+    color:#94a3b8;
+    cursor:pointer;
+}
+
+/* ================= TOAST ================= */
+
+.toast-container{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:999;
+}
+
+.toast{
+    background:#4f46e5;
+    color:white;
+    padding:14px 20px;
+    border-radius:10px;
+    margin-top:10px;
+    box-shadow:0 8px 25px #0003;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .charts{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .toggle{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .search{
+        width:220px;
+    }
+
+    .profile-info{
+        display:none;
+    }
+
+    .content{
+        padding:20px 15px;
+    }
+
+}
+
+@media(max-width:520px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        align-items:flex-start;
+    }
+
+    .header h1{
+        font-size:23px;
+    }
+
+    .search{
+        width:160px;
+    }
+
+    .pipeline{
+        flex-direction:column;
+    }
+
+    .table-wrap{
+        overflow-x:auto;
+    }
+
+}
+
+/* Hide all sidebar navigation count badges */
+.menu-item .badge,
+.menu-item .nav-badge {
+    display: none !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i class="bi bi-graph-up-arrow"></i>
+        </div>
+
+        <div>
+            <h2>RecruitIQ</h2>
+            <span>Recruitment Analytics</span>
+        </div>
+
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <a class="menu-item active" href="dashboard.html">
+        <i class="bi bi-grid-1x2-fill"></i>
+        Dashboard
+    </a>
+
+    <a class="menu-item" href="candidates.html">
+        <i class="bi bi-people-fill"></i>
+        Candidates
+    </a>
+
+    <a class="menu-item" href="jobs.html">
+        <i class="bi bi-briefcase-fill"></i>
+        Jobs
+    </a>
+
+    <a class="menu-item" href="interviews.html">
+        <i class="bi bi-calendar-check-fill"></i>
+        Interviews
+    </a>
+
+    <div class="menu-title">Analytics</div>
+
+    <a class="menu-item" href="analytics.html">
+        <i class="bi bi-bar-chart-fill"></i>
+        Analytics
+    </a>
+
+    <a class="menu-item" href="reports.html">
+        <i class="bi bi-file-bar-graph-fill"></i>
+        Reports
+    </a>
+
+    <div class="sidebar-bottom">
+
+        <a class="menu-item" href="settings.html">
+            <i class="bi bi-gear-fill"></i>
+            Settings
+        </a>
+
+        <a class="menu-item" href="index.html" id="logoutBtn">
+            <i class="bi bi-box-arrow-left"></i>
+            Logout
+        </a>
+
+        <div class="user">
+
+            <div class="avatar-sm" id="sidebarAvatar">
+                AD
+            </div>
+
+            <div>
+                <b id="sidebarUserName">Admin</b>
+                <span id="sidebarUserRole">Admin</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<header class="topbar">
+
+    <div class="top-left">
+
+        <button class="toggle" id="toggle">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="search">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                id="search"
+                placeholder="Search candidates, jobs..."
+            >
+
+            <small>Ctrl K</small>
+
+        </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <button class="icon" id="notify">
+            <i class="bi bi-bell"></i>
+            <span class="dot"></span>
+        </button>
+
+        <button class="icon" id="message">
+            <i class="bi bi-chat-dots"></i>
+        </button>
+
+        <div class="profile">
+
+            <div class="avatar" id="topAvatar">
+                AD
+            </div>
+
+            <div class="profile-info">
+
+                <b id="topUserName">Admin</b>
+
+                <small id="topUserRole">Admin</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<section class="content">
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <div>
+
+        <div class="breadcrumb">
+            Home
+            <i class="bi bi-chevron-right"></i>
+            Dashboard
+        </div>
+
+        <h1 id="welcomeMessage">
+            Good Morning, Admin 👋
+        </h1>
+
+        <p class="subtitle">
+            Here's what's happening with your recruitment process today.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= STATS ================= -->
+
+<div class="stats">
+
+    <!-- TOTAL -->
+
+    <div class="card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon blue">
+                <i class="bi bi-people-fill"></i>
+            </div>
+
+            <span class="trend">Live</span>
+
+        </div>
+
+        <p>Total Candidates</p>
+
+        <h2 id="total">0</h2>
+
+        <small>from MySQL</small>
+
+    </div>
+
+
+    <!-- APPLIED -->
+
+    <div class="card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon purple">
+                <i class="bi bi-file-earmark-person-fill"></i>
+            </div>
+
+            <span class="trend">Live</span>
+
+        </div>
+
+        <p>New Applications</p>
+
+        <h2 id="newApps">0</h2>
+
+        <small>Applied status</small>
+
+    </div>
+
+
+    <!-- SHORTLISTED -->
+
+    <div class="card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon orange">
+                <i class="bi bi-person-check-fill"></i>
+            </div>
+
+            <span class="trend">Live</span>
+
+        </div>
+
+        <p>Shortlisted</p>
+
+        <h2 id="shortlistedCount">0</h2>
+
+        <small>candidates</small>
+
+    </div>
+
+
+    <!-- INTERVIEWED - MOVED BEFORE SELECTED -->
+
+    <div class="card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon cyan">
+                <i class="bi bi-camera-video-fill"></i>
+            </div>
+
+            <span class="trend">Live</span>
+
+        </div>
+
+        <p>Interviewed</p>
+
+        <h2 id="interviewedCount">0</h2>
+
+        <small>candidates</small>
+
+    </div>
+
+
+    <!-- SELECTED -->
+
+    <div class="card">
+
+        <div class="stat-top">
+
+            <div class="stat-icon green">
+                <i class="bi bi-trophy-fill"></i>
+            </div>
+
+            <span class="trend">Live</span>
+
+        </div>
+
+        <p>Selected</p>
+
+        <h2 id="selectedCount">0</h2>
+
+        <small>candidates</small>
+
+    </div>
+
+</div>
+
+
+<!-- ================= CHARTS ================= -->
+
+<div class="charts">
+
+
+    <!-- APPLICATION OVERVIEW -->
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <div>
+
+                <h3>Application Overview</h3>
+
+                <p>
+                    Monthly application trends
+                </p>
+
+            </div>
+
+            <select class="select" id="period">
+
+                <option value="6">
+                    Last 6 months
+                </option>
+
+                <option value="12">
+                    Last 12 months
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="chart">
+
+            <canvas id="lineChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- PIPELINE -->
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <div>
+
+                <h3>Pipeline & Skills</h3>
+
+                <p>
+                    Candidate distribution & top skills
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="pipeline">
+
+            <div class="donut">
+
+                <canvas id="donutChart"></canvas>
+
+                <div class="center">
+
+                    <strong id="shortlistedCenter">
+                        0
+                    </strong>
+
+                    <span>
+                        shortlisted
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="legend">
+
+                <div>
+                    <span
+                        class="ldot"
+                        style="background:#6366f1">
+                    </span>
+
+                    Applied
+
+                    <b id="appliedPct">
+                        0%
+                    </b>
+                </div>
+
+
+                <div>
+                    <span
+                        class="ldot"
+                        style="background:#f59e0b">
+                    </span>
+
+                    Shortlisted
+
+                    <b id="shortPct">
+                        0%
+                    </b>
+                </div>
+
+
+                <div>
+                    <span
+                        class="ldot"
+                        style="background:#06b6d4">
+                    </span>
+
+                    Interview
+
+                    <b id="interviewPct">
+                        0%
+                    </b>
+                </div>
+
+
+                <div>
+                    <span
+                        class="ldot"
+                        style="background:#10b981">
+                    </span>
+
+                    Selected
+
+                    <b id="selectedPct">
+                        0%
+                    </b>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SKILLS -->
+
+        <div class="skills">
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    <span>SQL</span>
+                    <b>82%</b>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="bar"
+                        style="width:82%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    <span>Python</span>
+                    <b>76%</b>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="bar"
+                        style="width:76%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    <span>Power BI</span>
+                    <b>68%</b>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="bar"
+                        style="width:68%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    <span>Excel</span>
+                    <b>62%</b>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="bar"
+                        style="width:62%">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= RECENT APPLICATIONS ================= -->
+
+<div class="panel">
+
+    <div class="panel-head">
+
+        <div>
+
+            <h3>Recent Applications</h3>
+
+            <p>
+                Latest candidate activity from MySQL
+            </p>
+
+        </div>
+
+        <a
+            href="candidates.html"
+            style="
+            color:#4f46e5;
+            font-size:12px;
+            font-weight:600;
+            "
+        >
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Candidate</th>
+
+                    <th>Position</th>
+
+                    <th>Applied</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="table"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<div
+    class="toast-container"
+    id="toastContainer">
+</div>
+
+
+<script>
+
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
+
+(function(){
+
+    const storedUser =
+        localStorage.getItem("recruitiq_user") ||
+        sessionStorage.getItem("recruitiq_user");
+
+    const storedToken =
+        localStorage.getItem("recruitiq_token") ||
+        sessionStorage.getItem("recruitiq_token");
+
+
+    if(!storedUser || !storedToken){
+
+        window.location.href = "index.html";
+
+        return;
+    }
+
+
+    try{
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        const name =
+            String(
+                user.name || "Admin"
+            ).trim();
+
+
+        const role =
+            String(
+                user.role || "Admin"
+            ).trim();
+
+
+        const parts =
+            name
+            .split(/\s+/)
+            .filter(Boolean);
+
+
+        let initials = "AD";
+
+
+        if(parts.length >= 2){
+
+            initials =
+                (
+                    parts[0][0] +
+                    parts[1][0]
+                ).toUpperCase();
+
+        }
+        else if(parts.length === 1){
+
+            initials =
+                parts[0]
+                .substring(0,2)
+                .toUpperCase();
+
+        }
+
+
+        document.getElementById(
+            "sidebarUserName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "sidebarUserRole"
+        ).textContent = role;
+
+
+        document.getElementById(
+            "sidebarAvatar"
+        ).textContent = initials;
+
+
+        document.getElementById(
+            "topUserName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "topUserRole"
+        ).textContent = role;
+
+
+        document.getElementById(
+            "topAvatar"
+        ).textContent = initials;
+
+
+        document.getElementById(
+            "welcomeMessage"
+        ).textContent =
+            `Good Morning, ${name} 👋`;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        localStorage.clear();
+        sessionStorage.clear();
+
+        window.location.href =
+            "index.html";
+
+    }
+
+})();
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",function(e){
+
+    e.preventDefault();
+
+    localStorage.removeItem(
+        "recruitiq_user"
+    );
+
+    localStorage.removeItem(
+        "recruitiq_token"
+    );
+
+    localStorage.removeItem(
+        "recruitiq_remember"
+    );
+
+    sessionStorage.removeItem(
+        "recruitiq_user"
+    );
+
+    sessionStorage.removeItem(
+        "recruitiq_token"
+    );
+
+    window.location.href =
+        "index.html";
+
+});
+
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_URL =
+    "http://localhost:5000/api/candidates";
+
+
+const $ =
+    id => document.getElementById(id);
+
+
+let candidatesData = [];
+
+let lineChart = null;
+
+let donutChart = null;
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(text){
+
+    const box =
+        document.createElement("div");
+
+    box.className =
+        "toast";
+
+    box.textContent =
+        text;
+
+    document
+        .getElementById("toastContainer")
+        .appendChild(box);
+
+
+    setTimeout(
+        () => box.remove(),
+        3000
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function esc(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /[&<>"']/g,
+        m => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[m])
+    );
+
+}
+
+
+/* =====================================================
+   INITIALS
+===================================================== */
+
+function getInitials(name){
+
+    const words =
+        String(name || "Candidate")
+        .trim()
+        .split(/\s+/);
+
+
+    if(words.length >= 2){
+
+        return (
+            words[0][0] +
+            words[1][0]
+        ).toUpperCase();
+
+    }
+
+
+    return words[0]
+        .substring(0,2)
+        .toUpperCase();
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(value){
+
+    if(!value)
+        return "-";
+
+
+    const match =
+        String(value)
+        .match(
+            /^(\d{4})-(\d{2})-(\d{2})/
+        );
+
+
+    if(match){
+
+        const date =
+            new Date(
+                Number(match[1]),
+                Number(match[2])-1,
+                Number(match[3])
+            );
+
+
+        return date.toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function statusClass(status){
+
+    const s =
+        String(status || "Applied")
+        .toLowerCase();
+
+
+    if(s === "shortlisted")
+        return "short";
+
+
+    if(s === "interview")
+        return "interview";
+
+
+    if(s === "selected")
+        return "selected";
+
+
+    return "applied";
+
+}
+
+
+/* =====================================================
+   LOAD CANDIDATES
+===================================================== */
+
+async function loadCandidates(){
+
+    try{
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method:"GET",
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.message ||
+                "API error"
+            );
+
+        }
+
+
+        candidatesData =
+            Array.isArray(
+                result.candidates
+            )
+            ? result.candidates
+            : [];
+
+
+        updateDashboard();
+
+    }
+    catch(error){
+
+        console.error(
+            "Dashboard API Error:",
+            error
+        );
+
+
+        $("table").innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    style="
+                    text-align:center;
+                    padding:30px;
+                    color:#dc2626;
+                    "
+                >
+
+                    Unable to load candidates.
+
+                    <br><br>
+
+                    Make sure
+                    <b>node server.js</b>
+                    is running.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        toast(
+            "Backend/API connection failed"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+    const total =
+        candidatesData.length;
+
+
+    const applied =
+        candidatesData.filter(
+            c =>
+                String(
+                    c.status || ""
+                ).toLowerCase()
+                === "applied"
+        ).length;
+
+
+    const shortlisted =
+        candidatesData.filter(
+            c =>
+                String(
+                    c.status || ""
+                ).toLowerCase()
+                === "shortlisted"
+        ).length;
+
+
+    /*
+       IMPORTANT:
+       Database status is "Interview"
+       not "Interviewed".
+    */
+
+    const interviewed =
+        candidatesData.filter(
+            c =>
+                String(
+                    c.status || ""
+                ).toLowerCase()
+                === "interview"
+        ).length;
+
+
+    const selected =
+        candidatesData.filter(
+            c =>
+                String(
+                    c.status || ""
+                ).toLowerCase()
+                === "selected"
+        ).length;
+
+
+    $("total").textContent =
+        total;
+
+
+    $("newApps").textContent =
+        applied;
+
+
+    $("shortlistedCount").textContent =
+        shortlisted;
+
+
+    $("interviewedCount").textContent =
+        interviewed;
+
+
+    $("selectedCount").textContent =
+        selected;
+
+
+    $("shortlistedCenter").textContent =
+        shortlisted;
+
+
+    let appliedPct = 0;
+    let shortPct = 0;
+    let interviewPct = 0;
+    let selectedPct = 0;
+
+
+    if(total > 0){
+
+        appliedPct =
+            Math.round(
+                applied / total * 100
+            );
+
+        shortPct =
+            Math.round(
+                shortlisted / total * 100
+            );
+
+        interviewPct =
+            Math.round(
+                interviewed / total * 100
+            );
+
+        selectedPct =
+            Math.round(
+                selected / total * 100
+            );
+
+    }
+
+
+    $("appliedPct").textContent =
+        appliedPct + "%";
+
+
+    $("shortPct").textContent =
+        shortPct + "%";
+
+
+    $("interviewPct").textContent =
+        interviewPct + "%";
+
+
+    $("selectedPct").textContent =
+        selectedPct + "%";
+
+
+    if(donutChart){
+
+        donutChart.data.datasets[0].data = [
+
+            appliedPct,
+            shortPct,
+            interviewPct,
+            selectedPct
+
+        ];
+
+        donutChart.update();
+
+    }
+
+
+    renderRecentCandidates();
+
+    updateLineChart();
+
+}
+
+
+/* =====================================================
+   RECENT CANDIDATES
+===================================================== */
+
+function renderRecentCandidates(){
+
+    const table =
+        $("table");
+
+
+    table.innerHTML = "";
+
+
+    const recent =
+        [...candidatesData]
+        .sort(
+            (a,b) =>
+                Number(b.id || 0) -
+                Number(a.id || 0)
+        )
+        .slice(0,5);
+
+
+    if(!recent.length){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    style="
+                    text-align:center;
+                    padding:30px;
+                    color:#94a3b8;
+                    "
+                >
+
+                    No candidates found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    recent.forEach(
+        (candidate,index) => {
+
+            const name =
+                candidate.name ||
+                "Unknown";
+
+
+            const tr =
+                document.createElement("tr");
+
+
+            tr.innerHTML = `
+
+                <td>
+
+                    <div class="candidate">
+
+                        <div
+                            class="cavatar"
+                            style="
+                            background:
+                            ${
+                                index % 2 === 0
+                                ? "#4f46e5"
+                                : "#7c3aed"
+                            };
+                            "
+                        >
+                            ${esc(
+                                getInitials(name)
+                            )}
+                        </div>
+
+
+                        <div class="cinfo">
+
+                            <b>
+                                ${esc(name)}
+                            </b>
+
+                            <span>
+                                ${esc(
+                                    candidate.email || ""
+                                )}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+                    ${esc(
+                        candidate.position || "-"
+                    )}
+                </td>
+
+
+                <td>
+                    ${esc(
+                        formatDate(
+                            candidate.applied_date
+                        )
+                    )}
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="
+                        status
+                        ${statusClass(
+                            candidate.status
+                        )}
+                        "
+                    >
+                        ${esc(
+                            candidate.status ||
+                            "Applied"
+                        )}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="action"
+                        title="View candidate"
+                        onclick="
+                            viewCandidate(
+                                ${Number(candidate.id)}
+                            )
+                        "
+                    >
+                        <i class="
+                            bi
+                            bi-three-dots-vertical
+                        "></i>
+                    </button>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(tr);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   VIEW CANDIDATE
+===================================================== */
+
+function viewCandidate(id){
+
+    const candidate =
+        candidatesData.find(
+            c =>
+                Number(c.id) ===
+                Number(id)
+        );
+
+
+    if(!candidate)
+        return;
+
+
+    toast(
+        `${candidate.name} · ${
+            candidate.position ||
+            "Candidate"
+        }`
+    );
+
+}
+
+
+/* =====================================================
+   LINE CHART
+===================================================== */
+
+function updateLineChart(){
+
+    if(!lineChart)
+        return;
+
+
+    const months =
+        Number(
+            $("period").value
+        );
+
+
+    const labels = [];
+
+    const counts = [];
+
+    const now =
+        new Date();
+
+
+    for(
+        let i = months - 1;
+        i >= 0;
+        i--
+    ){
+
+        const date =
+            new Date(
+                now.getFullYear(),
+                now.getMonth() - i,
+                1
+            );
+
+
+        labels.push(
+            date.toLocaleString(
+                "en-US",
+                {
+                    month:"short"
+                }
+            )
+        );
+
+
+        const year =
+            date.getFullYear();
+
+
+        const month =
+            date.getMonth();
+
+
+        const count =
+            candidatesData.filter(
+                candidate => {
+
+                    const value =
+                        candidate.applied_date;
+
+                    if(!value)
+                        return false;
+
+
+                    const match =
+                        String(value)
+                        .match(
+                            /^(\d{4})-(\d{2})-(\d{2})/
+                        );
+
+
+                    if(!match)
+                        return false;
+
+
+                    return (
+
+                        Number(match[1])
+                        === year
+
+                        &&
+
+                        Number(match[2]) - 1
+                        === month
+
+                    );
+
+                }
+            ).length;
+
+
+        counts.push(count);
+
+    }
+
+
+    lineChart.data.labels =
+        labels;
+
+
+    lineChart.data.datasets[0]
+        .data =
+        counts;
+
+
+    lineChart.options.scales.y.max =
+        Math.max(
+            ...counts,
+            1
+        ) + 1;
+
+
+    lineChart.update();
+
+}
+
+
+/* =====================================================
+   EXPORT CSV
+===================================================== */
+
+function exportCSV(){
+
+    if(!candidatesData.length){
+
+        toast(
+            "No candidate data available."
+        );
+
+        return;
+
+    }
+
+
+    const headers = [
+
+        "ID",
+        "Name",
+        "Email",
+        "Phone",
+        "Position",
+        "Experience",
+        "Education",
+        "Skills",
+        "Status",
+        "Applied Date",
+        "ATS Score",
+        "ATS Label"
+
+    ];
+
+
+    const rows =
+        candidatesData.map(
+            c => [
+
+                c.id,
+                c.name,
+                c.email,
+                c.phone,
+                c.position,
+                c.experience,
+                c.education,
+                c.skills,
+                c.status,
+                c.applied_date,
+                c.ats_score,
+                c.ats_label
+
+            ]
+        );
+
+
+    const csv =
+        [
+            headers,
+            ...rows
+        ]
+        .map(
+            row =>
+                row.map(
+                    value =>
+                        `"${String(
+                            value ?? ""
+                        ).replace(
+                            /"/g,
+                            '""'
+                        )}"`
+                )
+                .join(",")
+        )
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href = url;
+
+
+    a.download =
+        "RecruitIQ_Candidates.csv";
+
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+
+    URL.revokeObjectURL(url);
+
+
+    toast(
+        "Candidate data exported successfully."
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+$("search").addEventListener(
+    "input",
+    function(){
+
+        const query =
+            this.value
+            .toLowerCase()
+            .trim();
+
+
+        document
+        .querySelectorAll(
+            "#table tr"
+        )
+        .forEach(
+            row => {
+
+                row.style.display =
+                    row.innerText
+                    .toLowerCase()
+                    .includes(query)
+                    ? ""
+                    : "none";
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CTRL + K
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    e => {
+
+        if(
+            (e.ctrlKey ||
+             e.metaKey)
+            &&
+            e.key.toLowerCase()
+            === "k"
+        ){
+
+            e.preventDefault();
+
+            $("search").focus();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+$("notify").addEventListener(
+    "click",
+    () => {
+
+        toast(
+            "You have new recruitment notifications."
+        );
+
+    }
+);
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+$("message").addEventListener(
+    "click",
+    () => {
+
+        toast(
+            "No new messages."
+        );
+
+    }
+);
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+$("toggle").addEventListener(
+    "click",
+    () => {
+
+        $("sidebar")
+        .classList
+        .toggle("open");
+
+    }
+);
+
+
+/* =====================================================
+   CHART INITIALIZATION
+===================================================== */
+
+function initializeCharts(){
+
+    if(typeof Chart === "undefined"){
+
+        console.error(
+            "Chart.js not loaded"
+        );
+
+        return;
+
+    }
+
+
+    /* LINE */
+
+    const lineCanvas =
+        $("lineChart");
+
+
+    const ctx =
+        lineCanvas
+        .getContext("2d");
+
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            270
+        );
+
+
+    gradient.addColorStop(
+        0,
+        "rgba(79,70,229,.20)"
+    );
+
+
+    gradient.addColorStop(
+        1,
+        "rgba(79,70,229,0)"
+    );
+
+
+    lineChart =
+        new Chart(
+            ctx,
+            {
+
+                type:"line",
+
+                data:{
+
+                    labels:[],
+
+                    datasets:[{
+
+                        label:
+                            "Applications",
+
+                        data:[],
+
+                        borderColor:
+                            "#4f46e5",
+
+                        backgroundColor:
+                            gradient,
+
+                        borderWidth:3,
+
+                        fill:true,
+
+                        tension:.35,
+
+                        pointRadius:5
+
+                    }]
+
+                },
+
+                options:{
+
+                    responsive:true,
+
+                    maintainAspectRatio:false,
+
+                    plugins:{
+
+                        legend:{
+                            display:false
+                        }
+
+                    },
+
+                    scales:{
+
+                        y:{
+
+                            beginAtZero:true,
+
+                            ticks:{
+                                precision:0
+                            }
+
+                        },
+
+                        x:{
+
+                            grid:{
+                                display:false
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+
+    /* DONUT */
+
+    donutChart =
+        new Chart(
+            $("donutChart"),
+            {
+
+                type:"doughnut",
+
+                data:{
+
+                    labels:[
+
+                        "Applied",
+                        "Shortlisted",
+                        "Interview",
+                        "Selected"
+
+                    ],
+
+                    datasets:[{
+
+                        data:[
+                            1,
+                            0,
+                            0,
+                            0
+                        ],
+
+                        backgroundColor:[
+
+                            "#6366f1",
+                            "#f59e0b",
+                            "#06b6d4",
+                            "#10b981"
+
+                        ],
+
+                        borderColor:
+                            "#ffffff",
+
+                        borderWidth:3
+
+                    }]
+
+                },
+
+                options:{
+
+                    responsive:true,
+
+                    maintainAspectRatio:false,
+
+                    cutout:"74%",
+
+                    plugins:{
+
+                        legend:{
+                            display:false
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   PERIOD
+===================================================== */
+
+$("period").addEventListener(
+    "change",
+    updateLineChart
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+initializeCharts();
+
+loadCandidates();
+
+
+/* Auto refresh every 10 seconds */
+
+setInterval(
+    loadCandidates,
+    10000
+);
+
+</script>
+
+</body>
+</html>

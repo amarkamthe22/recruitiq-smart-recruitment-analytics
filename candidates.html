@@ -1,0 +1,3492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RecruitIQ · Candidates</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#4f46e5;
+    --primary2:#7c3aed;
+    --bg:#f3f6fc;
+    --card:#ffffff;
+    --text:#10213b;
+    --muted:#718096;
+    --border:#e2e8f0;
+    --sidebar:#081326;
+    --green:#10b981;
+    --orange:#f97316;
+    --cyan:#06b6d4;
+    --red:#ef4444;
+    --shadow:0 8px 25px rgba(15,23,42,.07);
+}
+
+body{
+    font-family:Inter,Arial,Segoe UI,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:linear-gradient(180deg,#081326,#0b1730);
+    color:white;
+    padding:22px 12px;
+    z-index:100;
+    overflow-y:auto;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 8px 25px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.brand-icon{
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    display:grid;
+    place-items:center;
+    font-size:22px;
+}
+
+.brand h2{
+    font-size:20px;
+}
+
+.brand span{
+    font-size:10px;
+    color:#a8b3c7;
+}
+
+.menu-title{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:#71809a;
+    margin:28px 10px 10px;
+}
+
+.menu-item{
+    height:45px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:0 14px;
+    margin:5px 0;
+    border-radius:9px;
+    color:#cbd5e1;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.menu-item:hover{
+    background:rgba(99,102,241,.18);
+    color:white;
+}
+
+.menu-item.active{
+    background:linear-gradient(135deg,#4f46e5,#5548e8);
+    color:white;
+}
+
+.menu-item i{
+    font-size:17px;
+}
+
+.badge{
+    margin-left:auto;
+    min-width:25px;
+    padding:3px 7px;
+    border-radius:20px;
+    background:#3730a3;
+    color:white;
+    text-align:center;
+    font-size:10px;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    padding-top:10px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-footer-user{
+    margin-top:20px;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border-radius:10px;
+    background:rgba(255,255,255,.05);
+}
+
+.avatar-sm{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#4f46e5;
+    font-weight:800;
+    font-size:12px;
+}
+
+.sidebar-footer-user strong{
+    display:block;
+    font-size:12px;
+}
+
+.sidebar-footer-user span{
+    font-size:10px;
+    color:#94a3b8;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:245px;
+    min-height:100vh;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    height:68px;
+    background:white;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.topbar-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.sidebar-toggle{
+    display:none;
+    border:0;
+    background:none;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.search-box{
+    width:360px;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:22px;
+    display:flex;
+    align-items:center;
+    padding:0 15px;
+    gap:10px;
+}
+
+.search-box i{
+    color:#94a3b8;
+}
+
+.search-box input{
+    border:0;
+    outline:0;
+    width:100%;
+    font-size:13px;
+}
+
+.search-shortcut{
+    font-size:11px;
+    color:#94a3b8;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.icon-btn{
+    border:0;
+    background:white;
+    font-size:19px;
+    color:#475569;
+    cursor:pointer;
+    position:relative;
+}
+
+.notification-dot{
+    width:6px;
+    height:6px;
+    background:#ef4444;
+    border-radius:50%;
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    color:white;
+    display:grid;
+    place-items:center;
+    font-weight:800;
+}
+
+.profile-info strong{
+    display:block;
+    font-size:13px;
+}
+
+.profile-info span{
+    display:block;
+    color:#94a3b8;
+    font-size:11px;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:30px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:25px;
+}
+
+.breadcrumb{
+    font-size:11px;
+    color:#94a3b8;
+    margin-bottom:8px;
+}
+
+.breadcrumb i{
+    margin:0 5px;
+}
+
+.page-header h1{
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#718096;
+    font-size:13px;
+}
+
+.header-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.primary-btn,
+.secondary-btn{
+    height:42px;
+    padding:0 17px;
+    border-radius:9px;
+    border:0;
+    cursor:pointer;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.primary-btn{
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    color:white;
+    box-shadow:0 8px 18px rgba(79,70,229,.25);
+}
+
+.secondary-btn{
+    background:white;
+    border:1px solid var(--border);
+    color:#475569;
+}
+
+/* ================= FIVE CARDS ================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:18px;
+    margin-bottom:25px;
+    width:100%;
+}
+
+.summary-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    min-width:0;
+}
+
+.card-icon{
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.card-icon.blue{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+.card-icon.purple{
+    background:#f3e8ff;
+    color:#7c3aed;
+}
+
+.card-icon.orange{
+    background:#fff7ed;
+    color:#ea580c;
+}
+
+.card-icon.cyan{
+    background:#ecfeff;
+    color:#0891b2;
+}
+
+.card-icon.green{
+    background:#ecfdf5;
+    color:#059669;
+}
+
+.summary-card p{
+    font-size:12px;
+    color:#64748b;
+    margin-bottom:4px;
+}
+
+.summary-card h2{
+    font-size:30px;
+    color:#0f172a;
+    margin-bottom:6px;
+}
+
+.trend{
+    display:inline-block;
+    padding:3px 9px;
+    border-radius:20px;
+    background:#ecfdf5;
+    color:#059669;
+    font-size:10px;
+    font-weight:700;
+}
+
+/* ================= PANEL ================= */
+
+.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+
+.panel-header{
+    padding:20px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+}
+
+.panel-header h3{
+    font-size:17px;
+}
+
+.panel-header p{
+    font-size:11px;
+    color:#94a3b8;
+    margin-top:4px;
+}
+
+/* ================= FILTERS ================= */
+
+.filters{
+    padding:18px 22px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+}
+
+.filter-group{
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 12px;
+    background:white;
+}
+
+.filter-group i{
+    color:#94a3b8;
+}
+
+.filter-input{
+    border:0;
+    outline:0;
+    width:230px;
+    font-size:12px;
+}
+
+.filter-select{
+    border:0;
+    outline:0;
+    font-size:12px;
+    color:#475569;
+    background:white;
+}
+
+.filter-actions{
+    display:flex;
+    gap:8px;
+    margin-left:auto;
+}
+
+.filter-actions button{
+    height:40px;
+    padding:0 16px;
+    border:1px solid var(--border);
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.filter-actions .apply-btn{
+    background:#4f46e5;
+    color:white;
+    border-color:#4f46e5;
+}
+
+.active-filters{
+    padding:0 22px;
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.filter-tag{
+    background:#eef2ff;
+    color:#4f46e5;
+    border-radius:20px;
+    padding:5px 10px;
+    font-size:10px;
+    margin-top:12px;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:950px;
+}
+
+thead{
+    background:#f8fafc;
+}
+
+th{
+    padding:14px 18px;
+    text-align:left;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:#64748b;
+}
+
+td{
+    padding:15px 18px;
+    border-top:1px solid #edf1f7;
+    font-size:12px;
+}
+
+.candidate{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.candidate-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:11px;
+    font-weight:800;
+}
+
+.blue-bg{
+    background:#e0e7ff;
+    color:#4338ca;
+}
+
+.purple-bg{
+    background:#f3e8ff;
+    color:#7e22ce;
+}
+
+.green-bg{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.orange-bg{
+    background:#ffedd5;
+    color:#c2410c;
+}
+
+.pink-bg{
+    background:#fce7f3;
+    color:#be185d;
+}
+
+.cyan-bg{
+    background:#cffafe;
+    color:#0e7490;
+}
+
+.candidate-info strong{
+    display:block;
+    color:#0f172a;
+}
+
+.candidate-info span{
+    color:#94a3b8;
+    font-size:10px;
+}
+
+.skills-tags{
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+}
+
+.skill-tag{
+    background:#f1f5f9;
+    padding:4px 7px;
+    border-radius:5px;
+    font-size:9px;
+    color:#475569;
+}
+
+.status-select{
+    border:0;
+    border-radius:20px;
+    padding:6px 10px;
+    background:#eef2ff;
+    color:#4338ca;
+    font-size:10px;
+    font-weight:700;
+    outline:none;
+    cursor:pointer;
+}
+
+.action-buttons{
+    display:flex;
+    gap:6px;
+}
+
+.action-btn{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:7px;
+    cursor:pointer;
+    background:#f1f5f9;
+}
+
+.action-btn.view{
+    color:#4f46e5;
+}
+
+.action-btn.edit{
+    color:#0891b2;
+}
+
+.action-btn.delete{
+    color:#ef4444;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.65);
+    z-index:300;
+    place-items:center;
+    padding:20px;
+}
+
+.modal-overlay.active{
+    display:grid;
+}
+
+.modal{
+    width:min(760px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:18px;
+}
+
+.modal-header{
+    padding:20px 24px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h2{
+    font-size:19px;
+}
+
+.modal-close{
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:8px;
+    background:#f1f5f9;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.modal-body{
+    padding:24px;
+}
+
+.form-section-title{
+    font-weight:800;
+    color:#334155;
+    margin:10px 0 15px;
+    font-size:13px;
+}
+
+.form-section-title i{
+    color:#4f46e5;
+    margin-right:6px;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-row.three{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    color:#475569;
+    margin-bottom:6px;
+}
+
+.required{
+    color:#ef4444;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    outline:none;
+    padding:0 11px;
+    font-size:12px;
+}
+
+.form-group textarea{
+    height:90px;
+    padding-top:10px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#6366f1;
+    box-shadow:0 0 0 3px rgba(99,102,241,.1);
+}
+
+.field-hint{
+    font-size:9px;
+    color:#94a3b8;
+    margin-top:4px;
+    display:block;
+}
+
+.input-error{
+    border-color:#ef4444 !important;
+}
+
+.modal-footer{
+    padding:17px 24px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+.cancel-btn,
+.save-btn{
+    height:42px;
+    padding:0 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.cancel-btn{
+    background:white;
+    border:1px solid var(--border);
+}
+
+.save-btn{
+    background:#4f46e5;
+    color:white;
+    border:0;
+}
+
+
+/* ================= CANDIDATE VIEW MODAL ================= */
+.view-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.68);z-index:400;place-items:center;padding:20px}
+.view-modal-overlay.active{display:grid}
+.view-modal{width:min(820px,100%);max-height:90vh;overflow-y:auto;background:white;border-radius:18px;box-shadow:0 25px 70px rgba(15,23,42,.25)}
+.view-modal-header{padding:22px 25px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:15px}
+.view-modal-title-wrap{display:flex;align-items:center;gap:13px}
+.view-modal-avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#eef2ff;color:#4338ca;font-weight:800;font-size:14px}
+.view-modal-header h2{font-size:20px;margin-bottom:4px}
+.view-modal-header p{color:#94a3b8;font-size:11px}
+.view-close{width:36px;height:36px;border:0;border-radius:9px;background:#f1f5f9;font-size:22px;cursor:pointer;color:#475569}
+.view-modal-body{padding:24px}
+.view-status-row{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px;border:1px solid var(--border);border-radius:12px;background:#f8fafc;margin-bottom:20px}
+.view-status-left strong{display:block;font-size:13px;margin-bottom:4px}
+.view-status-left span{color:#64748b;font-size:11px}
+.view-status-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:20px;font-size:10px;font-weight:800}
+.view-status-badge.applied{background:#eef2ff;color:#4338ca}.view-status-badge.shortlisted{background:#fff7ed;color:#c2410c}.view-status-badge.interview{background:#ecfeff;color:#0e7490}.view-status-badge.selected{background:#ecfdf5;color:#047857}.view-status-badge.rejected{background:#fef2f2;color:#b91c1c}.view-status-badge.on-hold{background:#f8fafc;color:#475569}
+.criteria-result{border-radius:14px;padding:18px;margin-bottom:22px;border:1px solid}
+.criteria-result.eligible{background:#ecfdf5;border-color:#a7f3d0}.criteria-result.not-eligible{background:#fef2f2;border-color:#fecaca}
+.criteria-result-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}.criteria-result-head i{font-size:25px}.criteria-result.eligible .criteria-result-head{color:#047857}.criteria-result.not-eligible .criteria-result-head{color:#b91c1c}.criteria-result h3{font-size:16px}.criteria-result p{color:#475569;font-size:11px;line-height:1.6}
+.view-section{margin-bottom:22px}.view-section-title{font-size:13px;font-weight:800;color:#334155;margin-bottom:12px;display:flex;align-items:center;gap:7px}.view-section-title i{color:#4f46e5}
+.view-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.view-item{border:1px solid var(--border);border-radius:10px;padding:12px;background:white}.view-item.full{grid-column:1/-1}.view-item label{display:block;color:#94a3b8;font-size:9px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-weight:700}.view-item strong,.view-item span{font-size:12px;color:#1e293b;line-height:1.5;word-break:break-word}
+.criteria-list{display:grid;gap:8px}.criteria-item{display:flex;align-items:flex-start;gap:9px;padding:11px 12px;border:1px solid var(--border);border-radius:9px;background:#fff}.criteria-item i{margin-top:1px;font-size:14px}.criteria-item.pass i{color:#059669}.criteria-item.fail i{color:#dc2626}.criteria-item span{font-size:11px;color:#475569;line-height:1.45}
+.ats-box{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center;padding:16px;border:1px solid var(--border);border-radius:12px;background:#f8fafc}.ats-score{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:#eef2ff;color:#4338ca;border:8px solid #c7d2fe;font-size:23px;font-weight:900}.ats-info strong{display:block;font-size:14px;margin-bottom:5px}.ats-info span{color:#64748b;font-size:11px}
+.view-notes{padding:13px;background:#f8fafc;border:1px solid var(--border);border-radius:10px;color:#475569;font-size:11px;line-height:1.6;white-space:pre-wrap}
+.view-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}.view-modal-footer button{height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--border);background:white;cursor:pointer;font-weight:700}
+@media(max-width:600px){.view-grid{grid-template-columns:1fr}.view-item.full{grid-column:auto}.ats-box{grid-template-columns:1fr;justify-items:center;text-align:center}.view-status-row{align-items:flex-start;flex-direction:column}}
+
+/* ================= TOAST ================= */
+
+.toast-container{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:500;
+}
+
+.toast{
+    background:#0f172a;
+    color:white;
+    padding:13px 18px;
+    border-radius:9px;
+    margin-top:8px;
+    font-size:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    opacity:0;
+    transform:translateY(15px);
+    transition:.3s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.toast.success{
+    background:#047857;
+}
+
+.toast.error{
+    background:#b91c1c;
+}
+
+.toast.info{
+    background:#1d4ed8;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px){
+
+    .summary-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .filters{
+        flex-wrap:wrap;
+    }
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .sidebar-toggle{
+        display:block;
+    }
+
+    .search-box{
+        width:250px;
+    }
+
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .page-header{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:15px;
+    }
+}
+
+@media(max-width:550px){
+
+    .content{
+        padding:18px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .search-box{
+        width:180px;
+    }
+
+    .profile-info,
+    .profile > i{
+        display:none;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-row,
+    .form-row.three{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .filter-group{
+        width:100%;
+    }
+
+    .filter-input{
+        width:100%;
+    }
+
+    .filter-actions{
+        margin-left:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">
+            <i class="bi bi-graph-up-arrow"></i>
+        </div>
+
+        <div>
+            <h2>RecruitIQ</h2>
+            <span>Recruitment Analytics</span>
+        </div>
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <nav>
+
+        <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            Dashboard
+        </a>
+
+        <a href="candidates.html" class="menu-item active">
+            <i class="bi bi-people-fill"></i>
+            Candidates
+        </a>
+
+        <a href="jobs.html" class="menu-item">
+            <i class="bi bi-briefcase-fill"></i>
+            Jobs
+        </a>
+
+        <a href="interviews.html" class="menu-item">
+            <i class="bi bi-calendar-check-fill"></i>
+            Interviews
+        </a>
+
+    </nav>
+
+    <div class="menu-title">Analytics</div>
+
+    <nav>
+
+        <a href="analytics.html" class="menu-item">
+            <i class="bi bi-bar-chart-fill"></i>
+            Analytics
+        </a>
+
+        <a href="reports.html" class="menu-item">
+            <i class="bi bi-file-bar-graph-fill"></i>
+            Reports
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <a href="settings.html" class="menu-item">
+            <i class="bi bi-gear-fill"></i>
+            Settings
+        </a>
+
+        <a href="index.html" class="menu-item">
+            <i class="bi bi-box-arrow-left"></i>
+            Logout
+        </a>
+
+        <div class="sidebar-footer-user">
+
+            <div class="avatar-sm">AK</div>
+
+            <div>
+                <strong id="sideUserName">Amar Kamthe</strong>
+                <span id="sideUserRole">Admin</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div class="search-box">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    id="topSearch"
+                    placeholder="Search candidates, jobs..."
+                >
+
+                <span class="search-shortcut">
+                    Ctrl K
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="top-actions">
+
+            <button class="icon-btn">
+                <i class="bi bi-bell"></i>
+                <span class="notification-dot"></span>
+            </button>
+
+            <button class="icon-btn">
+                <i class="bi bi-chat-dots"></i>
+            </button>
+
+            <div class="profile">
+
+                <div class="avatar">AK</div>
+
+                <div class="profile-info">
+                    <strong id="topUserName">Amar Kamthe</strong>
+                    <span id="topUserRole">Admin</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+        <div class="page-header">
+
+            <div>
+
+                <p class="breadcrumb">
+                    Home
+                    <i class="bi bi-chevron-right"></i>
+                    Candidates
+                </p>
+
+                <h1>Candidates</h1>
+
+                <p class="subtitle">
+                    Manage and track all candidates in the recruitment process.
+                </p>
+
+            </div>
+
+            <div class="header-buttons">
+
+                <button class="secondary-btn"
+                        onclick="exportCandidates()">
+
+                    <i class="bi bi-download"></i>
+                    Export
+
+                </button>
+
+                <button class="primary-btn"
+                        onclick="openCandidateForm()">
+
+                    <i class="bi bi-plus-lg"></i>
+                    Add Candidate
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= 5 SUMMARY CARDS ================= -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="card-icon blue">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <p>Total Candidates</p>
+
+                <h2 id="totalCandidates">0</h2>
+
+                <span class="trend">
+                    <i class="bi bi-activity"></i>
+                    Live
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="card-icon purple">
+                    <i class="bi bi-file-earmark-person-fill"></i>
+                </div>
+
+                <p>Applied</p>
+
+                <h2 id="appliedCount">0</h2>
+
+                <span class="trend">
+                    <i class="bi bi-activity"></i>
+                    Live
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="card-icon orange">
+                    <i class="bi bi-person-check-fill"></i>
+                </div>
+
+                <p>Shortlisted</p>
+
+                <h2 id="shortlistedCount">0</h2>
+
+                <span class="trend">
+                    <i class="bi bi-activity"></i>
+                    Live
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="card-icon cyan">
+                    <i class="bi bi-calendar-check-fill"></i>
+                </div>
+
+                <p>Interviewed</p>
+
+                <h2 id="interviewedCount">0</h2>
+
+                <span class="trend">
+                    <i class="bi bi-activity"></i>
+                    Live
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="card-icon green">
+                    <i class="bi bi-trophy-fill"></i>
+                </div>
+
+                <p>Selected</p>
+
+                <h2 id="selectedCount">0</h2>
+
+                <span class="trend">
+                    <i class="bi bi-activity"></i>
+                    Live
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= TABLE PANEL ================= -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h3>Candidate List</h3>
+
+                    <p>
+                        View and manage candidate information
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="filters">
+
+                <div class="filter-group">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        id="candidateSearch"
+                        class="filter-input"
+                        placeholder="Search by name or email..."
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <i class="bi bi-filter"></i>
+
+                    <select id="statusFilter"
+                            class="filter-select">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="Applied">
+                            Applied
+                        </option>
+
+                        <option value="Shortlisted">
+                            Shortlisted
+                        </option>
+
+                        <option value="Interview">
+                            Interview
+                        </option>
+
+                        <option value="Selected">
+                            Selected
+                        </option>
+
+                        <option value="Rejected">
+                            Rejected
+                        </option>
+
+                        <option value="On Hold">
+                            On Hold
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <i class="bi bi-briefcase"></i>
+
+                    <select id="positionFilter"
+                            class="filter-select">
+
+                        <option value="all">
+                            All Positions
+                        </option>
+
+                        <option>
+                            Data Analyst
+                        </option>
+
+                        <option>
+                            Python Developer
+                        </option>
+
+                        <option>
+                            Business Analyst
+                        </option>
+
+                        <option>
+                            DevOps Engineer
+                        </option>
+
+                        <option>
+                            Product Designer
+                        </option>
+
+                        <option>
+                            Senior Frontend
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-actions">
+
+                    <button class="apply-btn"
+                            onclick="applyFilters()">
+                        Apply
+                    </button>
+
+                    <button onclick="resetFilters()">
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="active-filters"
+                 id="activeFilters">
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Candidate</th>
+
+                            <th>Position</th>
+
+                            <th>Skills</th>
+
+                            <th>Experience</th>
+
+                            <th>Applied Date</th>
+
+                            <th>Status</th>
+
+                            <th style="text-align:center">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="candidateTableBody">
+
+                        <tr>
+
+                            <td colspan="7"
+                                style="text-align:center;padding:40px">
+
+                                Loading candidates...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= CANDIDATE VIEW MODAL ================= -->
+<div class="view-modal-overlay" id="viewCandidateModal">
+    <div class="view-modal">
+        <div class="view-modal-header">
+            <div class="view-modal-title-wrap">
+                <div class="view-modal-avatar" id="viewAvatar">--</div>
+                <div>
+                    <h2 id="viewCandidateName">Candidate Details</h2>
+                    <p id="viewCandidatePosition">Candidate</p>
+                </div>
+            </div>
+            <button class="view-close" onclick="closeViewCandidateModal()">&times;</button>
+        </div>
+        <div class="view-modal-body" id="viewCandidateContent"></div>
+        <div class="view-modal-footer">
+            <button onclick="closeViewCandidateModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast-container"
+     id="toastContainer">
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal-overlay"
+     id="candidateModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Add New Candidate
+            </h2>
+
+            <button class="modal-close"
+                    onclick="closeCandidateForm()">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-section-title">
+                <i class="bi bi-person-vcard"></i>
+                Personal Information
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        First Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="firstName"
+                        type="text"
+                        placeholder="Enter first name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Last Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="lastName"
+                        type="text"
+                        placeholder="Enter last name"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="candidate@email.com"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone
+                    </label>
+
+                    <input
+                        id="phone"
+                        type="tel"
+                        maxlength="10"
+                        placeholder="10-digit mobile number"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-section-title">
+                <i class="bi bi-briefcase"></i>
+                Professional Information
+            </div>
+
+
+            <div class="form-row three">
+
+                <div class="form-group">
+
+                    <label>
+                        Applied Job
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="job_id"
+                            onchange="setJobDetails()">
+
+                        <option value="">
+                            Loading jobs...
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Position
+                    </label>
+
+                    <input
+                        id="position"
+                        readonly
+                        placeholder="Auto selected"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select id="status">
+
+                        <option>Applied</option>
+                        <option>Shortlisted</option>
+                        <option>Interview</option>
+                        <option>Selected</option>
+                        <option>Rejected</option>
+                        <option>On Hold</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Skills
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="skills"
+                        placeholder="Python, SQL, Power BI"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Experience (years)
+                    </label>
+
+                    <input
+                        id="experience"
+                        type="number"
+                        min="0"
+                        step="0.1"
+                        placeholder="0"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-section-title">
+
+                <i class="bi bi-mortarboard"></i>
+                Education & Notes
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Education
+                </label>
+
+                <input
+                    id="education"
+                    placeholder="BE Information Technology"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Recruiter Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    placeholder="Add notes..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="cancel-btn"
+                    onclick="closeCandidateForm()">
+
+                Cancel
+
+            </button>
+
+            <button class="save-btn"
+                    id="saveButton"
+                    onclick="saveCandidate()">
+
+                Save Candidate
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   API
+============================================================ */
+
+const API_URL =
+    "http://localhost:5000/api/candidates";
+
+const JOBS_API_URL =
+    "http://localhost:5000/api/jobs";
+
+
+/* ============================================================
+   DATA
+============================================================ */
+
+let candidatesData = [];
+let jobsData = [];
+
+let editingId = null;
+
+let currentFilter = {
+    search:"",
+    status:"all",
+    position:"all"
+};
+
+
+/* ============================================================
+   AUTH TOKEN
+============================================================ */
+
+function getToken(){
+
+    return (
+        localStorage.getItem("recruitiq_token") ||
+        sessionStorage.getItem("recruitiq_token") ||
+        ""
+    );
+
+}
+
+
+function authHeaders(){
+
+    const token = getToken();
+
+    const headers = {
+        "Accept":"application/json"
+    };
+
+    if(token){
+        headers["Authorization"] =
+            "Bearer " + token;
+    }
+
+    return headers;
+}
+
+
+/* ============================================================
+   USER
+============================================================ */
+
+function loadUser(){
+
+    let raw =
+        localStorage.getItem("recruitiq_user") ||
+        sessionStorage.getItem("recruitiq_user");
+
+    if(!raw) return;
+
+    try{
+
+        const user = JSON.parse(raw);
+
+        const name =
+            user.name || "Amar Kamthe";
+
+        const role =
+            user.role || "Admin";
+
+        document.getElementById("topUserName")
+            .textContent = name;
+
+        document.getElementById("topUserRole")
+            .textContent = role;
+
+        document.getElementById("sideUserName")
+            .textContent = name;
+
+        document.getElementById("sideUserRole")
+            .textContent = role;
+
+        const parts =
+            name.trim().split(/\s+/);
+
+        let initials =
+            parts[0]?.[0] || "A";
+
+        if(parts.length > 1){
+            initials +=
+                parts[parts.length-1][0];
+        }
+
+        document.querySelector(".avatar")
+            .textContent =
+            initials.toUpperCase();
+
+        document.querySelector(".avatar-sm")
+            .textContent =
+            initials.toUpperCase();
+
+    }catch(error){
+
+        console.log("User session not available");
+
+    }
+
+}
+
+
+/* ============================================================
+   TOAST
+============================================================ */
+
+function showToast(message,type="success"){
+
+    const container =
+        document.getElementById("toastContainer");
+
+    const toast =
+        document.createElement("div");
+
+    toast.className =
+        "toast " + type;
+
+    toast.innerHTML =
+        `<i class="bi ${
+            type==="success"
+            ? "bi-check-circle-fill"
+            : type==="error"
+            ? "bi-exclamation-circle-fill"
+            : "bi-info-circle-fill"
+        }"></i> ${escapeHTML(message)}`;
+
+    container.appendChild(toast);
+
+    setTimeout(()=>{
+        toast.classList.add("show");
+    },20);
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+        setTimeout(()=>{
+            toast.remove();
+        },300);
+
+    },3000);
+
+}
+
+
+/* ============================================================
+   LOAD JOBS
+============================================================ */
+
+async function loadJobs(){
+
+    const select =
+        document.getElementById("job_id");
+
+    try{
+
+        const response =
+            await fetch(JOBS_API_URL,{
+                method:"GET",
+                headers:authHeaders(),
+                cache:"no-store"
+            });
+
+        const data =
+            await response.json();
+
+        if(!response.ok || !data.success){
+
+            throw new Error(
+                data.message ||
+                "Could not load jobs"
+            );
+
+        }
+
+        jobsData =
+            Array.isArray(data.jobs)
+            ? data.jobs
+            : [];
+
+        select.innerHTML =
+            `<option value="">
+                Select Job
+            </option>`;
+
+        jobsData.forEach(job=>{
+
+            const option =
+                document.createElement("option");
+
+            option.value = job.id;
+
+            option.textContent =
+                `${job.title || "Untitled Job"}${
+                    job.location
+                    ? " - " + job.location
+                    : ""
+                }`;
+
+            option.dataset.title =
+                job.title || "";
+
+            select.appendChild(option);
+
+        });
+
+        if(jobsData.length===0){
+
+            select.innerHTML =
+                `<option value="">
+                    No jobs available
+                </option>`;
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        select.innerHTML =
+            `<option value="">
+                Unable to load jobs
+            </option>`;
+
+        showToast(
+            "Could not load jobs.",
+            "error"
+        );
+
+    }
+
+}
+
+
+function setJobDetails(){
+
+    const select =
+        document.getElementById("job_id");
+
+    const position =
+        document.getElementById("position");
+
+    const option =
+        select.options[select.selectedIndex];
+
+    if(!option || !option.value){
+
+        position.value = "";
+
+        return;
+    }
+
+    position.value =
+        option.dataset.title || "";
+
+}
+
+
+/* ============================================================
+   LOAD CANDIDATES
+============================================================ */
+
+async function loadCandidates(){
+
+    const tbody =
+        document.getElementById(
+            "candidateTableBody"
+        );
+
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="7"
+                style="text-align:center;padding:40px">
+
+                <i class="bi bi-hourglass-split"></i>
+                Loading candidates...
+
+            </td>
+        </tr>
+    `;
+
+    try{
+
+        const response =
+            await fetch(API_URL,{
+                method:"GET",
+                headers:authHeaders(),
+                cache:"no-store"
+            });
+
+        const data =
+            await response.json();
+
+        if(!response.ok || !data.success){
+
+            throw new Error(
+                data.message ||
+                "Could not load candidates"
+            );
+
+        }
+
+        candidatesData =
+            Array.isArray(data.candidates)
+            ? data.candidates
+            : [];
+
+        renderCandidates();
+
+        updateSummaryCards();
+
+    }catch(error){
+
+        console.error(error);
+
+        candidatesData = [];
+
+        renderCandidates();
+
+        showToast(
+            "Could not connect to backend. Make sure node server.js is running.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   RENDER
+============================================================ */
+
+function renderCandidates(){
+
+    const tbody =
+        document.getElementById(
+            "candidateTableBody"
+        );
+
+    const filtered =
+        filterCandidates(candidatesData);
+
+    if(filtered.length===0){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7"
+                    style="text-align:center;padding:40px;color:#94a3b8">
+
+                    <i class="bi bi-inbox"
+                       style="font-size:30px"></i>
+
+                    <br><br>
+                    No candidates found
+
+                </td>
+            </tr>
+        `;
+
+        updateActiveFilters();
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        filtered.map((candidate,index)=>{
+
+            const name =
+                candidate.name ||
+                "Unknown Candidate";
+
+            const initials =
+                getInitials(name);
+
+            const colors = [
+                "blue-bg",
+                "purple-bg",
+                "green-bg",
+                "orange-bg",
+                "pink-bg",
+                "cyan-bg"
+            ];
+
+            const color =
+                colors[index % colors.length];
+
+            const skills =
+                String(candidate.skills || "")
+                .split(",")
+                .map(s=>s.trim())
+                .filter(Boolean);
+
+
+            return `
+
+                <tr>
+
+                    <td>
+
+                        <div class="candidate">
+
+                            <div class="candidate-avatar ${color}">
+                                ${escapeHTML(initials)}
+                            </div>
+
+                            <div class="candidate-info">
+
+                                <strong>
+                                    ${escapeHTML(name)}
+                                </strong>
+
+                                <span>
+                                    ${escapeHTML(
+                                        candidate.email || ""
+                                    )}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            candidate.position ||
+                            candidate.job_title ||
+                            "Not specified"
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <div class="skills-tags">
+
+                            ${
+                                skills.length
+
+                                ? skills.map(skill=>
+                                    `<span class="skill-tag">
+                                        ${escapeHTML(skill)}
+                                    </span>`
+                                ).join("")
+
+                                : `<span class="skill-tag">
+                                    Not specified
+                                  </span>`
+                            }
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            candidate.experience ||
+                            "Fresher"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatDate(
+                            candidate.applied_date
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <select
+                            class="status-select"
+                            onchange="
+                                updateCandidateStatus(
+                                    ${Number(candidate.id)},
+                                    this.value,
+                                    this
+                                )
+                            "
+                        >
+
+                            ${[
+                                "Applied",
+                                "Shortlisted",
+                                "Interview",
+                                "Selected",
+                                "Rejected",
+                                "On Hold"
+                            ].map(status=>`
+
+                                <option
+                                    value="${status}"
+                                    ${
+                                        String(
+                                            candidate.status ||
+                                            "Applied"
+                                        ).toLowerCase()
+                                        ===
+                                        status.toLowerCase()
+                                        ? "selected"
+                                        : ""
+                                    }
+                                >
+                                    ${status}
+                                </option>
+
+                            `).join("")}
+
+                        </select>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <button
+                                class="action-btn view"
+                                title="View"
+                                onclick="
+                                    viewCandidate(
+                                        ${Number(candidate.id)}
+                                    )
+                                "
+                            >
+                                <i class="bi bi-eye"></i>
+                            </button>
+
+
+                            <button
+                                class="action-btn edit"
+                                title="Edit"
+                                onclick="
+                                    editCandidate(
+                                        ${Number(candidate.id)}
+                                    )
+                                "
+                            >
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+
+                            <button
+                                class="action-btn delete"
+                                title="Delete"
+                                onclick="
+                                    deleteCandidate(
+                                        ${Number(candidate.id)}
+                                    )
+                                "
+                            >
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+
+    updateActiveFilters();
+
+}
+
+
+/* ============================================================
+   FILTER
+============================================================ */
+
+function filterCandidates(data){
+
+    const search =
+        currentFilter.search
+        .toLowerCase()
+        .trim();
+
+    const status =
+        currentFilter.status.toLowerCase();
+
+    const position =
+        currentFilter.position.toLowerCase();
+
+
+    return data.filter(candidate=>{
+
+        const name =
+            String(candidate.name || "")
+            .toLowerCase();
+
+        const email =
+            String(candidate.email || "")
+            .toLowerCase();
+
+        const candidatePosition =
+            String(
+                candidate.position ||
+                candidate.job_title ||
+                ""
+            ).toLowerCase();
+
+        const candidateStatus =
+            String(candidate.status || "")
+            .toLowerCase();
+
+
+        const searchMatch =
+            !search ||
+            name.includes(search) ||
+            email.includes(search) ||
+            candidatePosition.includes(search);
+
+
+        const statusMatch =
+            status === "all" ||
+            candidateStatus === status;
+
+
+        const positionMatch =
+            position === "all" ||
+            candidatePosition === position;
+
+
+        return (
+            searchMatch &&
+            statusMatch &&
+            positionMatch
+        );
+
+    });
+
+}
+
+
+function applyFilters(){
+
+    currentFilter.search =
+        document.getElementById(
+            "candidateSearch"
+        ).value;
+
+    currentFilter.status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+    currentFilter.position =
+        document.getElementById(
+            "positionFilter"
+        ).value;
+
+    renderCandidates();
+
+}
+
+
+function resetFilters(){
+
+    document.getElementById(
+        "candidateSearch"
+    ).value = "";
+
+    document.getElementById(
+        "topSearch"
+    ).value = "";
+
+    document.getElementById(
+        "statusFilter"
+    ).value = "all";
+
+    document.getElementById(
+        "positionFilter"
+    ).value = "all";
+
+
+    currentFilter = {
+        search:"",
+        status:"all",
+        position:"all"
+    };
+
+
+    renderCandidates();
+
+}
+
+
+function updateActiveFilters(){
+
+    const container =
+        document.getElementById(
+            "activeFilters"
+        );
+
+    const filters = [];
+
+    if(currentFilter.search){
+
+        filters.push(
+            `Search: "${currentFilter.search}"`
+        );
+
+    }
+
+    if(currentFilter.status !== "all"){
+
+        filters.push(
+            `Status: ${currentFilter.status}`
+        );
+
+    }
+
+    if(currentFilter.position !== "all"){
+
+        filters.push(
+            `Position: ${currentFilter.position}`
+        );
+
+    }
+
+
+    container.innerHTML =
+        filters.map(filter=>
+            `<span class="filter-tag">
+                ${escapeHTML(filter)}
+            </span>`
+        ).join("");
+
+}
+
+
+/* ============================================================
+   ADD CANDIDATE
+============================================================ */
+
+function openCandidateForm(){
+
+    editingId = null;
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Add New Candidate";
+
+
+    document.getElementById("firstName").value="";
+    document.getElementById("lastName").value="";
+    document.getElementById("email").value="";
+    document.getElementById("phone").value="";
+    document.getElementById("job_id").value="";
+    document.getElementById("position").value="";
+    document.getElementById("status").value="Applied";
+    document.getElementById("skills").value="";
+    document.getElementById("experience").value="";
+    document.getElementById("education").value="";
+    document.getElementById("notes").value="";
+
+
+    document.getElementById(
+        "candidateModal"
+    ).classList.add("active");
+
+}
+
+
+function closeCandidateForm(){
+
+    document.getElementById(
+        "candidateModal"
+    ).classList.remove("active");
+
+    editingId = null;
+
+}
+
+
+/* ============================================================
+   EDIT
+============================================================ */
+
+function editCandidate(id){
+
+    const candidate =
+        candidatesData.find(
+            c => Number(c.id) === Number(id)
+        );
+
+    if(!candidate) return;
+
+    editingId = Number(candidate.id);
+
+    const parts =
+        String(candidate.name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    const firstName = parts.shift() || "";
+    const lastName = parts.join(" ");
+
+    document.getElementById("modalTitle").textContent =
+        "Edit Candidate";
+
+    document.getElementById("firstName").value = firstName;
+    document.getElementById("lastName").value = lastName;
+    document.getElementById("email").value = candidate.email || "";
+    document.getElementById("phone").value = candidate.phone || "";
+
+    const jobSelect = document.getElementById("job_id");
+    const jobId = candidate.job_id ?? candidate.jobId ?? "";
+
+    jobSelect.value = jobId !== null ? String(jobId) : "";
+
+    if(jobSelect.value && jobSelect.options[jobSelect.selectedIndex]){
+        setJobDetails();
+    }else{
+        document.getElementById("position").value =
+            candidate.position || candidate.job_title || "";
+    }
+
+    document.getElementById("status").value =
+        candidate.status || "Applied";
+
+    document.getElementById("skills").value =
+        candidate.skills || "";
+
+    document.getElementById("experience").value =
+        extractExperience(candidate.experience);
+
+    document.getElementById("education").value =
+        candidate.education || "";
+
+    document.getElementById("notes").value =
+        candidate.notes || "";
+
+    document.getElementById("candidateModal")
+        .classList.add("active");
+}
+
+
+/* ============================================================
+   SAVE
+============================================================ */
+
+async function saveCandidate(){
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const jobId = document.getElementById("job_id").value;
+    const position = document.getElementById("position").value.trim();
+    const status = document.getElementById("status").value;
+    const skills = document.getElementById("skills").value.trim();
+    const experience = document.getElementById("experience").value.trim();
+    const education = document.getElementById("education").value.trim();
+    const notes = document.getElementById("notes").value.trim();
+
+    if(!firstName || !lastName || !email || !skills || !jobId){
+        showToast("Please fill all required fields.", "error");
+        return;
+    }
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        showToast("Please enter a valid email.", "error");
+        return;
+    }
+
+    if(phone && !/^\d{10}$/.test(phone)){
+        showToast("Phone number must contain 10 digits.", "error");
+        return;
+    }
+
+    const oldCandidate = editingId !== null
+        ? candidatesData.find(c => Number(c.id) === Number(editingId))
+        : null;
+
+    const numericJobId = Number(jobId);
+
+    if(!Number.isInteger(numericJobId) || numericJobId <= 0){
+        showToast("Please select a valid job.", "error");
+        return;
+    }
+
+    const appliedDate = oldCandidate?.applied_date
+        ? String(oldCandidate.applied_date).substring(0,10)
+        : new Date().toISOString().split("T")[0];
+
+    const candidate = {
+        name: `${firstName} ${lastName}`.trim(),
+        email,
+        phone,
+        job_id: numericJobId,
+        position: position || oldCandidate?.position || "",
+        experience: experience ? `${experience} Years` : "Fresher",
+        education,
+        skills,
+        status: status || "Applied",
+        applied_date: appliedDate,
+        notes,
+        resume_text: oldCandidate?.resume_text || "",
+        gender: oldCandidate?.gender || "",
+        department: oldCandidate?.department || "",
+        qualification: oldCandidate?.qualification || "",
+        aptitude_score: Number(oldCandidate?.aptitude_score || 0),
+        interview_score: Number(oldCandidate?.interview_score || 0)
+    };
+
+    const saveButton = document.getElementById("saveButton");
+    const originalText = saveButton.innerHTML;
+    const isEdit = editingId !== null;
+    const requestUrl = isEdit
+        ? `${API_URL}/${Number(editingId)}`
+        : API_URL;
+
+    try{
+        saveButton.disabled = true;
+        saveButton.innerHTML = `<i class="bi bi-hourglass-split"></i> Saving...`;
+
+        const headers = authHeaders();
+        headers["Content-Type"] = "application/json";
+
+        const response = await fetch(requestUrl, {
+            method: isEdit ? "PUT" : "POST",
+            headers,
+            body: JSON.stringify(candidate)
+        });
+
+        const responseText = await response.text();
+        let data = {};
+
+        try{
+            data = responseText ? JSON.parse(responseText) : {};
+        }catch(jsonError){
+            throw new Error(`Server returned an invalid response (${response.status}).`);
+        }
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                data.error ||
+                `Candidate could not be ${isEdit ? "updated" : "saved"} (${response.status})`
+            );
+        }
+
+        closeCandidateForm();
+
+        showToast(
+            isEdit
+                ? "Candidate updated successfully!"
+                : "Candidate added successfully!",
+            "success"
+        );
+
+        await loadCandidates();
+
+    }catch(error){
+        console.error("Candidate save error:", error);
+        showToast(
+            error.message || "Candidate could not be saved",
+            "error"
+        );
+    }finally{
+        saveButton.disabled = false;
+        saveButton.innerHTML = originalText;
+    }
+}
+
+
+/* ============================================================
+   UPDATE STATUS
+============================================================ */
+
+async function updateCandidateStatus(id, newStatus, selectElement) {
+    const candidate = candidatesData.find(c => Number(c.id) === Number(id));
+    if (!candidate) {
+        showToast("Candidate not found.", "error");
+        return;
+    }
+
+    const oldStatus = candidate.status || "Applied";
+    if (String(oldStatus).toLowerCase() === String(newStatus).toLowerCase()) return;
+
+    selectElement.disabled = true;
+
+    try {
+        const payload = {
+            name: candidate.name || "",
+            email: candidate.email || "",
+            phone: candidate.phone || "",
+            position: candidate.position || "",
+            experience: candidate.experience || "Fresher",
+            education: candidate.education || "",
+            skills: candidate.skills || "",
+            status: newStatus,
+            applied_date: candidate.applied_date ? String(candidate.applied_date).substring(0,10) : null,
+            notes: candidate.notes || "",
+            resume_text: candidate.resume_text || "",
+            gender: candidate.gender || "",
+            department: candidate.department || "",
+            qualification: candidate.qualification || "",
+            aptitude_score: Number(candidate.aptitude_score || 0),
+            interview_score: Number(candidate.interview_score || 0),
+            job_id: candidate.job_id !== null && candidate.job_id !== undefined && candidate.job_id !== ""
+                ? Number(candidate.job_id) : null
+        };
+
+        const headers = authHeaders();
+        headers["Content-Type"] = "application/json";
+
+        const response = await fetch(`${API_URL}/${Number(id)}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify(payload)
+        });
+
+        const responseText = await response.text();
+        let data = {};
+        try {
+            data = responseText ? JSON.parse(responseText) : {};
+        } catch (e) {
+            throw new Error(`Server returned an invalid response (${response.status}).`);
+        }
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || data.error || `Status update failed (${response.status})`);
+        }
+
+        candidate.status = newStatus;
+        updateSummaryCards();
+        renderCandidates();
+        showToast(`${candidate.name} → ${newStatus}`, "success");
+
+        await loadCandidates();
+
+    } catch (error) {
+        console.error("Status update error:", error);
+        selectElement.value = oldStatus;
+        showToast(error.message || "Status could not be updated", "error");
+    } finally {
+        selectElement.disabled = false;
+    }
+}
+
+/* ============================================================
+   DELETE
+============================================================ */
+
+async function deleteCandidate(id){
+
+    const candidate =
+        candidatesData.find(
+            c=>Number(c.id)===Number(id)
+        );
+
+    if(!candidate) return;
+
+
+    if(
+        !confirm(
+            `Are you sure you want to delete ${candidate.name}?`
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}/${id}`,
+                {
+                    method:"DELETE",
+                    headers:authHeaders()
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Candidate could not be deleted"
+            );
+
+        }
+
+
+        showToast(
+            "Candidate deleted successfully!",
+            "success"
+        );
+
+
+        await loadCandidates();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Delete failed",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   VIEW
+============================================================ */
+
+function viewCandidate(id){
+
+    const candidate = candidatesData.find(c => Number(c.id) === Number(id));
+
+    if(!candidate){
+        showToast("Candidate not found.", "error");
+        return;
+    }
+
+    const position = candidate.position || candidate.job_title || candidate.applied_job || "Not specified";
+    const job = jobsData.find(j => Number(j.id) === Number(candidate.job_id)) || {};
+    const requiredSkills = getRequiredSkills(position, job);
+    const candidateSkills = getCandidateSkills(candidate.skills);
+
+    const matchedSkills = requiredSkills.filter(required =>
+        candidateSkills.some(skill => skill === required || skill.includes(required) || required.includes(skill))
+    );
+
+    const missingSkills = requiredSkills.filter(required =>
+        !candidateSkills.some(skill => skill === required || skill.includes(required) || required.includes(skill))
+    );
+
+    const candidateExperience = parseExperience(candidate.experience);
+    const minimumExperience = getMinimumExperience(job.experience);
+    const experiencePass = candidateExperience >= minimumExperience;
+    const educationValue = String(candidate.education || candidate.qualification || "").trim();
+    const educationPass = educationValue.length > 0;
+    const skillPass = requiredSkills.length === 0 || (matchedSkills.length / requiredSkills.length) >= 0.5;
+    const overallEligible = skillPass && experiencePass && educationPass;
+    const status = candidate.status || "Applied";
+    const statusClass = String(status).toLowerCase().replace(/\s+/g,"-");
+    const initials = getInitials(candidate.name || "NA");
+    const atsScore = Number.isFinite(Number(candidate.ats_score)) ? Number(candidate.ats_score) : 0;
+
+    document.getElementById("viewAvatar").textContent = initials;
+    document.getElementById("viewCandidateName").textContent = candidate.name || "Unknown Candidate";
+    document.getElementById("viewCandidatePosition").textContent = `${position} • Applied ${formatDate(candidate.applied_date)}`;
+
+    const matchedText = requiredSkills.length ? `${matchedSkills.length}/${requiredSkills.length} required skills matched` : "No job skill criteria available";
+    const skillCriteriaText = requiredSkills.length ? `At least 50% of required skills must match. ${matchedText}.` : "No explicit skill list was returned for this job.";
+
+    const skillList = requiredSkills.length ? requiredSkills.map(skill => {
+        const matched = matchedSkills.includes(skill);
+        return `<div class="criteria-item ${matched ? "pass" : "fail"}">
+            <i class="bi ${matched ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i>
+            <span><strong>${escapeHTML(skill)}</strong> — ${matched ? "Matched" : "Missing"}</span>
+        </div>`;
+    }).join("") : `<div class="criteria-item pass"><i class="bi bi-info-circle-fill"></i><span>No explicit required skills were returned by the jobs API.</span></div>`;
+
+    document.getElementById("viewCandidateContent").innerHTML = `
+        <div class="view-status-row">
+            <div class="view-status-left">
+                <strong>Application Status</strong>
+                <span>Candidate ID #${escapeHTML(candidate.id)} • ${escapeHTML(candidate.email || "No email")}</span>
+            </div>
+            <span class="view-status-badge ${escapeHTML(statusClass)}"><i class="bi bi-circle-fill"></i>${escapeHTML(status)}</span>
+        </div>
+
+        <div class="criteria-result ${overallEligible ? "eligible" : "not-eligible"}">
+            <div class="criteria-result-head">
+                <i class="bi ${overallEligible ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i>
+                <div><h3>${overallEligible ? "ELIGIBLE" : "NOT ELIGIBLE"}</h3></div>
+            </div>
+            <p>${overallEligible ? "This candidate currently satisfies the criteria configured for the selected job." : "This candidate currently does not satisfy all configured criteria. Review the failed checks below."}</p>
+        </div>
+
+        <div class="view-section">
+            <div class="view-section-title"><i class="bi bi-person-vcard-fill"></i>Candidate Information</div>
+            <div class="view-grid">
+                <div class="view-item"><label>Full Name</label><strong>${escapeHTML(candidate.name || "N/A")}</strong></div>
+                <div class="view-item"><label>Email</label><span>${escapeHTML(candidate.email || "N/A")}</span></div>
+                <div class="view-item"><label>Phone</label><span>${escapeHTML(candidate.phone || "N/A")}</span></div>
+                <div class="view-item"><label>Applied Date</label><span>${formatDate(candidate.applied_date)}</span></div>
+            </div>
+        </div>
+
+        <div class="view-section">
+            <div class="view-section-title"><i class="bi bi-briefcase-fill"></i>Job & Professional Information</div>
+            <div class="view-grid">
+                <div class="view-item"><label>Applied Job</label><strong>${escapeHTML(position)}</strong></div>
+                <div class="view-item"><label>Department</label><span>${escapeHTML(candidate.job_department || candidate.department || job.department || "N/A")}</span></div>
+                <div class="view-item"><label>Experience</label><span>${escapeHTML(candidate.experience || "Fresher")}</span></div>
+                <div class="view-item"><label>Education</label><span>${escapeHTML(educationValue || "Not provided")}</span></div>
+                <div class="view-item full"><label>Candidate Skills</label><span>${escapeHTML(candidate.skills || "Not provided")}</span></div>
+            </div>
+        </div>
+
+        <div class="view-section">
+            <div class="view-section-title"><i class="bi bi-shield-check"></i>Recruitment Criteria Check</div>
+            <div class="criteria-list">
+                <div class="criteria-item ${skillPass ? "pass" : "fail"}"><i class="bi ${skillPass ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i><span><strong>Skills:</strong> ${escapeHTML(skillCriteriaText)}</span></div>
+                <div class="criteria-item ${experiencePass ? "pass" : "fail"}"><i class="bi ${experiencePass ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i><span><strong>Experience:</strong> Candidate has ${escapeHTML(candidateExperience)} year(s); minimum required is ${escapeHTML(minimumExperience)} year(s).</span></div>
+                <div class="criteria-item ${educationPass ? "pass" : "fail"}"><i class="bi ${educationPass ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i><span><strong>Education:</strong> ${educationPass ? "Education / qualification is available." : "Education / qualification is missing."}</span></div>
+            </div>
+        </div>
+
+        <div class="view-section">
+            <div class="view-section-title"><i class="bi bi-list-check"></i>Required Skills Match</div>
+            <div class="criteria-list">${skillList}</div>
+        </div>
+
+        <div class="view-section">
+            <div class="view-section-title"><i class="bi bi-graph-up-arrow"></i>ATS Score</div>
+            <div class="ats-box">
+                <div class="ats-score">${escapeHTML(atsScore)}</div>
+                <div class="ats-info">
+                    <strong>${escapeHTML(candidate.ats_label || getATSLabel(atsScore))}</strong>
+                    <span>ATS score is the value calculated by the recruitment backend. Higher scores indicate a stronger profile match.</span>
+                </div>
+            </div>
+        </div>
+
+        ${missingSkills.length ? `<div class="view-section"><div class="view-section-title"><i class="bi bi-exclamation-triangle"></i>Missing Skills</div><div class="view-notes">${escapeHTML(missingSkills.join(", "))}</div></div>` : ""}
+
+        <div class="view-section">
+            <div class="view-section-title"><i class="bi bi-sticky-fill"></i>Recruiter Notes</div>
+            <div class="view-notes">${escapeHTML(candidate.notes || "No recruiter notes added.")}</div>
+        </div>
+    `;
+
+    document.getElementById("viewCandidateModal").classList.add("active");
+}
+
+function closeViewCandidateModal(){
+    document.getElementById("viewCandidateModal").classList.remove("active");
+}
+
+function getCandidateSkills(value){
+    return String(value || "").split(",").map(skill => normalizeCriteriaText(skill)).filter(Boolean);
+}
+
+function getRequiredSkills(position, job){
+    let skills = [];
+    if(Array.isArray(job.skills)) skills = job.skills;
+    else if(typeof job.skills === "string") skills = job.skills.split(",");
+
+    if(!skills.length){
+        const defaults = {
+            "Data Analyst":["sql","python","power bi","excel"],
+            "Python Developer":["python","django","postgresql","aws"],
+            "Business Analyst":["excel","tableau","sql","communication"],
+            "DevOps Engineer":["aws","docker","kubernetes","linux","git"],
+            "Product Designer":["figma","ui","ux","prototyping"],
+            "Senior Frontend":["javascript","react","html","css","typescript"]
+        };
+        skills = defaults[position] || [];
+    }
+    return skills.map(skill => normalizeCriteriaText(skill)).filter(Boolean);
+}
+
+function normalizeCriteriaText(value){
+    return String(value || "").toLowerCase().replace(/[^a-z0-9+#./ -]/g," ").replace(/\s+/g," ").trim();
+}
+
+function parseExperience(value){
+    const text = String(value || "").toLowerCase();
+    if(text.includes("fresher")) return 0;
+    const match = text.match(/\d+(?:\.\d+)?/);
+    return match ? parseFloat(match[0]) : 0;
+}
+
+function getMinimumExperience(value){
+    const match = String(value || "").match(/\d+(?:\.\d+)?/);
+    return match ? parseFloat(match[0]) : 1;
+}
+
+function getATSLabel(score){
+    if(score >= 80) return "Strong Match";
+    if(score >= 60) return "Good Match";
+    if(score >= 40) return "Moderate Match";
+    return "Low Match";
+}
+
+
+/* ============================================================
+   SUMMARY CARDS
+============================================================ */
+
+function updateSummaryCards(){
+
+    const total =
+        candidatesData.length;
+
+
+    const applied =
+        candidatesData.filter(
+            c =>
+                String(c.status || "")
+                .toLowerCase()
+                === "applied"
+        ).length;
+
+
+    const shortlisted =
+        candidatesData.filter(
+            c =>
+                String(c.status || "")
+                .toLowerCase()
+                === "shortlisted"
+        ).length;
+
+
+    const interviewed =
+        candidatesData.filter(
+            c =>
+                String(c.status || "")
+                .toLowerCase()
+                === "interview"
+                ||
+                String(c.status || "")
+                .toLowerCase()
+                === "interviewed"
+        ).length;
+
+
+    const selected =
+        candidatesData.filter(
+            c =>
+                String(c.status || "")
+                .toLowerCase()
+                === "selected"
+        ).length;
+
+
+    document.getElementById(
+        "totalCandidates"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "appliedCount"
+    ).textContent =
+        applied;
+
+
+    document.getElementById(
+        "shortlistedCount"
+    ).textContent =
+        shortlisted;
+
+
+    document.getElementById(
+        "interviewedCount"
+    ).textContent =
+        interviewed;
+
+
+    document.getElementById(
+        "selectedCount"
+    ).textContent =
+        selected;
+
+}
+
+
+/* ============================================================
+   EXPORT CSV
+============================================================ */
+
+function csvEscape(value){
+
+    return `"${String(
+        value ?? ""
+    ).replace(/"/g,'""')}"`;
+
+}
+
+
+function exportCandidates(){
+
+    if(candidatesData.length===0){
+
+        showToast(
+            "No candidates to export.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    let csv =
+        "ID,Name,Email,Phone,Position,Experience,Education,Skills,Status,Applied Date,Notes\n";
+
+
+    candidatesData.forEach(c=>{
+
+        csv += [
+
+            c.id,
+            c.name,
+            c.email,
+            c.phone,
+            c.position,
+            c.experience,
+            c.education,
+            c.skills,
+            c.status,
+            c.applied_date,
+            c.notes
+
+        ].map(csvEscape).join(",") + "\n";
+
+    });
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+
+    link.download =
+        `RecruitIQ_Candidates_${
+            new Date()
+            .toISOString()
+            .split("T")[0]
+        }.csv`;
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    showToast(
+        "Candidates exported successfully!",
+        "success"
+    );
+
+}
+
+
+/* ============================================================
+   HELPERS
+============================================================ */
+
+function getInitials(name){
+
+    const parts =
+        String(name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+
+    if(!parts.length)
+        return "NA";
+
+
+    if(parts.length===1)
+        return parts[0]
+            .substring(0,2)
+            .toUpperCase();
+
+
+    return (
+        parts[0][0] +
+        parts[parts.length-1][0]
+    ).toUpperCase();
+
+}
+
+
+function extractExperience(value){
+
+    const match =
+        String(value || "")
+        .match(/\d+(?:\.\d+)?/);
+
+
+    return match
+        ? match[0]
+        : "";
+
+}
+
+
+function formatDate(dateStr){
+
+    if(!dateStr)
+        return "N/A";
+
+
+    const date =
+        new Date(dateStr);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return escapeHTML(dateStr);
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+function escapeHTML(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+document.getElementById(
+    "topSearch"
+).addEventListener(
+    "input",
+    function(){
+
+        document.getElementById(
+            "candidateSearch"
+        ).value = this.value;
+
+        currentFilter.search =
+            this.value;
+
+        renderCandidates();
+
+    }
+);
+
+
+document.getElementById(
+    "candidateSearch"
+).addEventListener(
+    "input",
+    function(){
+
+        document.getElementById(
+            "topSearch"
+        ).value = this.value;
+
+        currentFilter.search =
+            this.value;
+
+        renderCandidates();
+
+    }
+);
+
+
+/* ============================================================
+   SIDEBAR
+============================================================ */
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+document.getElementById(
+    "sidebarToggle"
+).addEventListener(
+    "click",
+    ()=>{
+        sidebar.classList.toggle("open");
+    }
+);
+
+
+/* ============================================================
+   KEYBOARD
+============================================================ */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase()==="k"
+        ){
+
+            event.preventDefault();
+
+            document.getElementById(
+                "candidateSearch"
+            ).focus();
+
+        }
+
+
+        if(event.key==="Escape"){
+            closeCandidateForm();
+            closeViewCandidateModal();
+        }
+
+    }
+);
+
+
+/* ============================================================
+   MODAL CLICK
+============================================================ */
+
+document.getElementById(
+    "candidateModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(event.target===this){
+
+            closeCandidateForm();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   VIEW MODAL CLICK
+============================================================ */
+
+document.getElementById("viewCandidateModal").addEventListener("click", function(event){
+    if(event.target === this){
+        closeViewCandidateModal();
+    }
+});
+
+
+/* ============================================================
+   INITIAL LOAD
+============================================================ */
+
+loadUser();
+
+loadJobs();
+
+loadCandidates();
+
+</script>
+
+</body>
+</html>
