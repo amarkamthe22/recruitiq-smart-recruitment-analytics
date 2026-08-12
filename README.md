@@ -138,7 +138,7 @@ The Reports module provides:
 ## 4. Project Structure
 
 ```text
-SMART-RECRUITMENT-ANALYTICS/
+recruitiq-smart-recruitment-analytics/
 │
 ├── backend/
 │   └── server.js
@@ -150,19 +150,20 @@ SMART-RECRUITMENT-ANALYTICS/
 │   ├── API_Documentation.md
 │   ├── Test_Cases.md
 │   ├── ER-Diagram.png
+│   ├── RecruitIQ_Demo.mp4
 │   │
 │   └── Screenshots/
-│       ├── 01_Login.png
-│       ├── 02_Dashboard.png
-│       ├── 03_Candidates.png
-│       ├── 04_Add_Candidate.png
-│       ├── 05_Jobs.png
-│       ├── 06_Add_Job.png
-│       ├── 07_Interviews.png
-│       ├── 08_Schedule_Interview.png
-│       ├── 09_Analytics.png
-│       ├── 10_Reports.png
-│       └── 11_Criteria_ATS.png
+│       ├── 01_Login.PNG
+│       ├── 02_Dashboard.PNG
+│       ├── 03_Candidates.PNG
+│       ├── 04_Add_Candidate.PNG
+│       ├── 05_Jobs.PNG
+│       ├── 06_Add_Job.PNG
+│       ├── 07_Interviews.PNG
+│       ├── 08_Schedule_Interview.PNG
+│       ├── 09_Analytics.PNG
+│       ├── 10_Reports.PNG
+│       └── 11_Criteria_ATS.PNG
 │
 ├── css/
 │   └── styles.css
@@ -181,8 +182,8 @@ SMART-RECRUITMENT-ANALYTICS/
 ├── interviews.html
 ├── analytics.html
 ├── reports.html
-├── applications.html
 └── settings.html
+```
 
 
 5. Database Design
@@ -353,7 +354,17 @@ Reports
 Criteria / ATS
 
 
-13. ER Diagram
+
+## 13. Demo Video
+
+A short demonstration video of the RecruitIQ application is available in the `docs` folder.
+
+Demo Video:
+
+`docs/RecruitIQ_Demo.mp4`
+
+
+14. ER Diagram
 
 The database ER diagram is available at:
 
@@ -367,7 +378,7 @@ Candidates
 Interviews
 
 
-14. Sample Data
+15. Sample Data
 
 The application was tested using sample recruitment data.
 
@@ -387,7 +398,7 @@ Interview
 Rejected
 
 
-15. Known Limitations
+16. Known Limitations
 
 Current limitations of the project include:
 
@@ -398,7 +409,7 @@ The ATS evaluation uses rule-based recruitment criteria.
 Advanced production-level security and deployment configuration may require further enhancement.
 
 
-16. Future Enhancements
+17. Future Enhancements
 
 Possible future improvements include:
 
@@ -414,7 +425,7 @@ Advanced analytics dashboards
 Automated interview reminders
 
 
-17. Project Status
+18. Project Status
 
 
 RecruitIQ is a functional Smart Recruitment Analytics Platform with working frontend, backend API integration, MySQL database integration, ATS/criteria evaluation, interview management, analytics and reporting modules.
