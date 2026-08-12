@@ -384,25 +384,29 @@ Testing included:
 
 ## 12. Screenshots
 
-Application screenshots are available in:
+### Dashboard
 
-```text
-docs/Screenshots/
-```
+![RecruitIQ Dashboard](docs/Screenshots/02_Dashboard.PNG)
 
-The screenshots cover:
+### Candidate Management
 
-- Login
-- Dashboard
-- Candidates
-- Add Candidate
-- Jobs
-- Add Job
-- Interviews
-- Schedule Interview
-- Analytics
-- Reports
-- Criteria / ATS
+![Candidate Management](docs/Screenshots/03_Candidates.PNG)
+
+### ATS / Recruitment Criteria
+
+![ATS / Recruitment Criteria](docs/Screenshots/11_Criteria_ATS.PNG)
+
+### Analytics
+
+![Recruitment Analytics](docs/Screenshots/09_Analytics.PNG)
+
+### Reports
+
+![Recruitment Reports](docs/Screenshots/10_Reports.PNG)
+
+More application screenshots are available in:
+
+`docs/Screenshots/`
 
 ---
 
